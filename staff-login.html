@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Portal & Teacher Applications | Kawa Academy</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="badge-watermark" aria-hidden="true"></div>
+
+    <header class="navbar">
+        <div class="container nav-flex">
+            <a href="index.html" class="brand">
+                <img src="badge.png" alt="Kawa Academy Badge" class="nav-badge">
+                <div>
+                    <h1>Kawa Academy</h1>
+                    <span>Staff & Teaching Careers</span>
+                </div>
+            </a>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="dos-login.html">DOS</a>
+                <a href="headteacher-login.html">Head Teacher</a>
+                <a href="directors-login.html">Directors</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="portal-grid">
+            <section class="card">
+                <h2>Current Staff Login</h2>
+                <p class="subtitle">Sign in to manage class registers, marks, and lesson plans.</p>
+                <form id="staffLoginForm">
+                    <div class="form-group">
+                        <label for="staffId">Staff ID / Email</label>
+                        <input type="text" id="staffId" placeholder="e.g. STF-101" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="staffPass">Password</label>
+                        <input type="password" id="staffPass" placeholder="Enter staff password" required>
+                    </div>
+                    <button type="submit" class="btn-primary full-width">Login to Staff Room</button>
+                </form>
+            </section>
+
+            <section class="card highlight-card">
+                <h2>Internal Staff Request to Directors</h2>
+                <p class="subtitle">For teachers already at Kawa Academy applying for leave, allowances, or welfare support.</p>
+                <form id="internalRequestForm">
+                    <div class="form-group">
+                        <label for="currentTeacherName">Teacher's Full Name</label>
+                        <input type="text" id="currentTeacherName" placeholder="Your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="requestType">Application / Request Category</label>
+                        <select id="requestType" required>
+                            <option value="">-- Choose Request Type --</option>
+                            <option value="Leave Application">Leave Application</option>
+                            <option value="Salary Advance / Loan">Salary Advance / Welfare</option>
+                            <option value="Classroom Supplies">Classroom Materials / Resources</option>
+                            <option value="Board Meeting Proposal">Proposal to the Directors</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="requestDetails">Details for the Directors</label>
+                        <textarea id="requestDetails" rows="3" placeholder="Write your message clearly for the Board of Directors..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn-secondary full-width">Send to Directors' Desk</button>
+                </form>
+                <div id="internalFeedback" class="feedback-msg"></div>
+            </section>
+        </div>
+
+        <section class="card wide-card">
+            <h2>External Teacher Job Application</h2>
+            <p class="subtitle">Qualified primary school teachers wishing to join Kawa Academy can apply below.</p>
+            <form id="teacherJobForm" class="form-grid-2">
+                <div class="form-group">
+                    <label for="applicantName">Applicant Full Name</label>
+                    <input type="text" id="applicantName" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="applicantPhone">Phone Number</label>
+                    <input type="tel" id="applicantPhone" placeholder="e.g. 0750 000 000" required>
+                </div>
+                <div class="form-group">
+                    <label for="qualification">Highest Teaching Qualification</label>
+                    <select id="qualification" required>
+                        <option value="">-- Select Qualification --</option>
+                        <option value="Grade III Certificate">Grade III Teaching Certificate</option>
+                        <option value="Diploma in Primary Education">Diploma in Primary Education</option>
+                        <option value="Bachelor of Education">Bachelor of Education (Primary)</option>
+                        <option value="ECD Certificate">Early Childhood Development (Nursery)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="subjectSpecialty">Preferred Subjects / Section</label>
+                    <input type="text" id="subjectSpecialty" placeholder="e.g. Mathematics & Science (Upper Primary)" required>
+                </div>
+                <div class="form-group full-span">
+                    <button type="submit" class="btn-primary">Submit Teaching Application</button>
+                </div>
+            </form>
+            <div id="jobFeedback" class="feedback-msg"></div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

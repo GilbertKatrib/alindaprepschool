@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Headteacher Portal | Kawa Academy</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .stat-num { font-size: 1.9rem; font-weight: 800; color: #1a365d; margin: 0.3rem 0; }
+    .approval-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid #e2e8f0; gap: 1rem; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav-bar">
+      <a href="index.html" class="logo">KAWA <span>HEADTEACHER</span></a>
+      <button class="menu-toggle" aria-label="Toggle Menu">&#9776;</button>
+      <ul class="nav-links">
+        <li><a href="headteacher-dashboard.html" class="active">Overview</a></li>
+        <li><a href="admission.html">Admissions</a></li>
+        <li><a href="academic.html">Curriculum</a></li>
+        <li><a href="headteacher-login.html">Log Out</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Office of the Headteacher (<span id="logged-user-id">KAWA-HEADTEACHER</span>)</h1>
+      <p>School-Wide Academic Supervision, Staff Performance &amp; Admissions Approvals</p>
+    </div>
+  </section>
+
+  <main>
+    <div class="container">
+      <div class="card-grid">
+        <div class="card">
+          <h3>Total Enrollment</h3>
+          <div class="stat-num">1,240</div>
+          <p>Active Students Across All Streams</p>
+        </div>
+        <div class="card">
+          <h3>Staff Attendance Today</h3>
+          <div class="stat-num">98.5%</div>
+          <p>64 of 65 Teaching Staff Present</p>
+        </div>
+        <div class="card">
+          <h3>Pending Admissions</h3>
+          <div class="stat-num">18</div>
+          <p>New Applications Ready for Review</p>
+        </div>
+      </div>
+
+      <div class="form-box" style="max-width: 100%; margin-top: 2rem;">
+        <h2 style="color: #1a365d; margin-bottom: 0.5rem;">Administrative Action Queue</h2>
+        <div class="approval-item">
+          <div>
+            <strong>Term III Mock Examination Timetable</strong>
+            <p style="font-size: 0.9rem; color: #4a5568;">Submitted by Director of Studies</p>
+          </div>
+          <button type="button" class="btn btn-accent" onclick="this.textContent='Approved ✓'; this.disabled=true;">Approve Schedule</button>
+        </div>
+        <div class="approval-item">
+          <div>
+            <strong>Science Department Lab Equipment Requisition</strong>
+            <p style="font-size: 0.9rem; color: #4a5568;">Submitted by Head of Sciences</p>
+          </div>
+          <button type="button" class="btn btn-accent" onclick="this.textContent='Endorsed ✓'; this.disabled=true;">Endorse Request</button>
+        </div>
+        <div class="approval-item" style="border-bottom: none;">
+          <div>
+            <strong>18 Shortlisted 2027 Intake Applicants</strong>
+            <p style="font-size: 0.9rem; color: #4a5568;">Admissions Committee Summary</p>
+          </div>
+          <button type="button" class="btn" onclick="this.textContent='Letters Issued ✓'; this.disabled=true;">Issue Admission Letters</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer><div class="container"><p>&copy; 2026 Kawa Academy Executive Administration.</p></div></footer>
+  <script src="buttons.js"></script>
+</body>
+</html>

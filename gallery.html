@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>School Gallery | Kawa Academy Primary School</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .filter-bar { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+    .filter-btn { background: #fef9c3; color: #14532d; border: 2px solid #facc15; padding: 8px 16px; border-radius: 8px; font-weight: 700; cursor: pointer; }
+    .filter-btn.active, .filter-btn:hover { background: #15803d; color: #fff; border-color: #15803d; }
+    .lightbox-modal { display: none; position: fixed; inset: 0; background: rgba(20, 83, 45, 0.92); z-index: 9999; justify-content: center; align-items: center; padding: 20px; }
+    .lightbox-modal.open { display: flex; }
+    .lightbox-box { background: #fff; border: 4px solid #facc15; border-radius: 14px; max-width: 760px; width: 100%; overflow: hidden; text-align: center; position: relative; }
+    .lightbox-box img { width: 100%; max-height: 70vh; object-fit: contain; background: #f0fdf4; }
+    .lightbox-details { padding: 14px; background: #fefce8; border-top: 2px solid #facc15; }
+    .lightbox-close { position: absolute; top: 10px; right: 10px; background: #facc15; color: #14532d; border: none; font-size: 1.1rem; font-weight: 800; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div class="badge-watermark" aria-hidden="true"></div>
+
+  <header class="navbar">
+    <div class="container nav-flex">
+      <a href="index.html" class="brand">
+        <img src="badge.png" alt="Kawa Academy Badge" class="nav-badge">
+        <div>
+          <h1>Kawa Academy</h1>
+          <span>School Photo Gallery (Nursery – P.7)</span>
+        </div>
+      </a>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="gallery.html" class="btn-outline">Gallery</a>
+        <a href="pupil-login.html">Pupil & Admissions</a>
+        <a href="staff-login.html">Staff & Careers</a>
+        <a href="dos-login.html">DOS</a>
+        <a href="headteacher-login.html">Head Teacher</a>
+        <a href="directors-login.html">Directors</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" style="padding: 40px 0;">
+    <div class="container hero-content">
+      <span class="role-badge gold">Campus & Pupil Life</span>
+      <h2>Kawa Academy Photo Gallery</h2>
+      <p>Click any photo to view it larger. Replace the image links below with your own school pictures.</p>
+    </div>
+  </section>
+
+  <main class="container" style="margin-bottom: 48px;">
+    <section class="card highlight-card">
+      <div class="filter-bar">
+        <button class="filter-btn active" onclick="filterGallery('all', this)">All Photos</button>
+        <button class="filter-btn" onclick="filterGallery('academics', this)">Academics</button>
+        <button class="filter-btn" onclick="filterGallery('sports', this)">Sports & Clubs</button>
+        <button class="filter-btn" onclick="filterGallery('campus', this)">School Events</button>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="gallery-item" data-category="academics" onclick="openLightbox(this)">
+          <img src="images/photo1.jpg" alt="Primary Classrooms">
+          <div class="gallery-caption"><strong>Interactive Classrooms</strong><span>Primary & Nursery lessons</span></div>
+        </div>
+        <div class="gallery-item" data-category="academics" onclick="openLightbox(this)">
+          <img src="images/photo2.jpg" alt="Nursery Learning">
+          <div class="gallery-caption"><strong>Nursery Play & Discovery</strong><span>Baby, Middle & Top Class</span></div>
+        </div>
+        <div class="gallery-item" data-category="academics" onclick="openLightbox(this)">
+          <img src="images/photo3.jpg" alt="Computer Lab">
+          <div class="gallery-caption"><strong>ICT & Computer Literacy</strong><span>Hands-on digital learning</span></div>
+        </div>
+        <div class="gallery-item" data-category="sports" onclick="openLightbox(this)">
+          <img src="images/photo4.jpg" alt="Sports Day">
+          <div class="gallery-caption"><strong>Annual Sports & Games</strong><span>Athletics, football & netball</span></div>
+        </div>
+        <div class="gallery-item" data-category="sports" onclick="openLightbox(this)">
+          <img src="images/photo5.jpg" alt="Music Dance and Drama">
+          <div class="gallery-caption"><strong>Music, Dance & Drama</strong><span>Creative talent & culture</span></div>
+        </div>
+        <div class="gallery-item" data-category="campus" onclick="openLightbox(this)">
+          <img src="images/photo6.jpg" alt="Morning Assembly">
+          <div class="gallery-caption"><strong>Morning School Assembly</strong><span>Discipline & moral values</span></div>
+        </div>
+        <div class="gallery-item" data-category="campus" onclick="openLightbox(this)">
+          <img src="images/photo7.jpg" alt="School Compound">
+          <div class="gallery-caption"><strong>Safe & Green Compound</strong><span>Clean learning environment</span></div>
+        </div>
+        <div class="gallery-item" data-category="campus" onclick="openLightbox(this)">
+          <img src="images/photo8.jpg" alt="Graduation Day">
+          <div class="gallery-caption"><strong>Top Class Graduation</strong><span>Celebrating pupil milestones</span></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="lightbox-modal" id="lightboxModal" onclick="closeLightbox(event)">
+    <div class="lightbox-box">
+      <button class="lightbox-close" onclick="closeLightbox(event, true)">&times;</button>
+      <img id="lightboxImg" src="" alt="Expanded Photo">
+      <div class="lightbox-details">
+        <h3 id="lightboxTitle" style="color:#14532d; margin-bottom:4px;"></h3>
+        <p id="lightboxDesc" style="color:#475569; font-size:0.9rem;"></p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 Kawa Academy Primary School. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    function filterGallery(category, btn) {
+      document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      document.querySelectorAll(".gallery-item").forEach(item => {
+        item.style.display = (category === "all" || item.dataset.category === category) ? "block" : "none";
+      });
+    }
+    function openLightbox(card) {
+      document.getElementById("lightboxImg").src = card.querySelector("img").src;
+      document.getElementById("lightboxTitle").textContent = card.querySelector("strong").textContent;
+      document.getElementById("lightboxDesc").textContent = card.querySelector("span").textContent;
+      document.getElementById("lightboxModal").classList.add("open");
+    }
+    function closeLightbox(event, force = false) {
+      if (force || event.target.id === "lightboxModal") {
+        document.getElementById("lightboxModal").classList.remove("open");
+      }
+    }
+  </script>
+  <script src="app.js"></script>
+</body>
+</html>

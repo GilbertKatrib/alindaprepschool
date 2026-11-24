@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Board of Directors | Kawa Academy</title>
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+<body>
+    <div class="badge-watermark" aria-hidden="true"></div>
+
+    <header class="navbar">
+        <div class="container nav-flex">
+            <a href="index.html" class="brand">
+                <img src="badge.png" alt="Kawa Academy Badge" class="nav-badge">
+                <div>
+                    <h1>Kawa Academy</h1>
+                    <span>Board of Directors Portal</span>
+                </div>
+            </a>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="headteacher-login.html">Head Teacher</a>
+                <a href="staff-login.html">Staff Portal</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container single-center">
+        <section class="card auth-box executive-border">
+            <span class="role-badge gold">Executive Board Access</span>
+            <h2>Directors' Portal Sign In</h2>
+            <p class="subtitle">Log in to review internal staff requests, teacher job applications, and school reports.</p>
+            
+            <form id="directorLoginForm">
+                <div class="form-group">
+                    <label for="directorRole">Select Director Seat</label>
+                    <select id="directorRole" required>
+                        <option value="">-- Choose Your Director Profile --</option>
+                        <option value="Chairperson">Chairperson of the Board</option>
+                        <option value="Director of Finance">Director of Finance & Administration</option>
+                        <option value="Director of Academics">Director of Academics & Welfare</option>
+                        <option value="Managing Director">Managing Director</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="directorCode">Personal Director ID</label>
+                    <input type="text" id="directorCode" placeholder="e.g. DIR-002" required>
+                </div>
+                <div class="form-group">
+                    <label for="directorPass">Board Passcode</label>
+                    <input type="password" id="directorPass" placeholder="Enter your private passcode" required>
+                </div>
+                <button type="submit" class="btn-primary full-width">Enter Boardroom Dashboard</button>
+            </form>
+            <div id="directorFeedback" class="feedback-msg"></div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

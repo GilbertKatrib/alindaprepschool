@@ -1,0 +1,87 @@
+<!-- contact.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us | Kawa Primary Academy</title>
+  <link rel="stylesheet" href="style.css">
+  
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <a href="index.html" class="brand">
+        <svg class="brand-crest" viewBox="0 0 300 340" aria-hidden="true">
+          <path d="M150 12 L272 56 V168 C272 246 218 302 150 328 C82 302 28 246 28 168 V56 Z" fill="#0f294a" stroke="#f59e0b" stroke-width="14"/>
+          <circle cx="150" cy="115" r="34" fill="#f59e0b"/>
+          <path d="M92 178 Q150 156 208 178 V224 Q150 202 92 224 Z" fill="#ffffff"/>
+        </svg>
+        KAWA PRIMARY ACADEMY
+      </a>
+      <button class="menu-toggle" aria-expanded="false" aria-label="Toggle Menu">&#9776;</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="academics.html">Academics</a></li>
+        <li><a href="admissions.html">Admissions</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+        <li><a href="pupil-login.html">Pupil Portal</a></li>
+        <li><a href="staff-login.html">Staff Portal</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1 class="section-title">Contact Kawa Primary Academy</h1>
+    <p class="section-sub">Book a guided parent tour or speak with our school office.</p>
+
+    <div class="grid-2">
+      <div class="card">
+        <form>
+          <div class="status-banner">Thank you! Our school secretary will respond within one school day.</div>
+          <div class="form-group">
+            <label for="cname">Parent / Guardian Name</label>
+            <input type="text" id="cname" required placeholder="e.g., Sarah Namukasa">
+          </div>
+          <div class="form-group">
+            <label for="cphone">Phone Number / Email</label>
+            <input type="text" id="cphone" required placeholder="+256 700 000 000">
+          </div>
+          <div class="form-group">
+            <label for="ctopic">Inquiry Topic</label>
+            <select id="ctopic">
+              <option>Schedule a Campus Tour</option>
+              <option>Nursery &amp; Primary Fees Structure</option>
+              <option>School Transport &amp; Meals</option>
+              <option>General Inquiry</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="cmsg">Message</label>
+            <textarea id="cmsg" rows="4" required placeholder="How can we help you and your child?"></textarea>
+          </div>
+          <button type="submit" class="btn btn-navy">Send Inquiry</button>
+        </form>
+      </div>
+      <div class="card">
+        <h3>School Office Hours</h3>
+        <p style="margin-bottom:1rem;">Monday – Friday: 7:30 AM – 5:00 PM<br>Saturday: 8:30 AM – 1:00 PM (Parent Visits)</p>
+        <h3>Quick Portal Access</h3>
+        <p style="color:var(--muted);margin-bottom:1rem;">Each school role uses its own dedicated login page:</p>
+        <div class="portal-links">
+          <a href="pupil-login.html" class="btn">Pupil Login</a>
+          <a href="staff-login.html" class="btn btn-emerald">Teacher Login</a>
+          <a href="headteacher-login.html" class="btn btn-navy">Headteacher</a>
+          <a href="directors-login.html" class="btn btn-navy">Directors</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Kawa Primary Academy. Excellence, Integrity, and Care.</p>
+  </footer>
+  <script src="app.js"></script>
+</body>
+</html>

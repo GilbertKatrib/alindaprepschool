@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Directors Governance Portal | Kawa Academy</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .stat-num { font-size: 1.9rem; font-weight: 800; color: #1a365d; margin: 0.3rem 0; }
+    .dash-table { width: 100%; border-collapse: collapse; margin-top: 1rem; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+    .dash-table th, .dash-table td { padding: 0.9rem 1rem; text-align: left; border-bottom: 1px solid #e2e8f0; }
+    .dash-table th { background: #1a365d; color: #fff; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav-bar">
+      <a href="index.html" class="logo">KAWA <span>BOARD OF DIRECTORS</span></a>
+      <button class="menu-toggle" aria-label="Toggle Menu">&#9776;</button>
+      <ul class="nav-links">
+        <li><a href="directors-dashboard.html" class="active">Governance</a></li>
+        <li><a href="index.html">Public Site</a></li>
+        <li><a href="directors-login.html">Log Out</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Board of Directors Portal (<span id="logged-user-id">KAWA-DIR-001</span>)</h1>
+      <p>Financial Oversight, Strategic Growth &amp; Institutional Capital Projects</p>
+    </div>
+  </section>
+
+  <main>
+    <div class="container">
+      <div class="card-grid">
+        <div class="card">
+          <h3>Term Fee Collection Rate</h3>
+          <div class="stat-num">94.2%</div>
+          <p>+3.8% compared to previous academic term</p>
+        </div>
+        <div class="card">
+          <h3>Annual Enrollment Growth</h3>
+          <div class="stat-num">+14%</div>
+          <p>Strong demand in STEM &amp; Upper Secondary</p>
+        </div>
+        <div class="card">
+          <h3>ICT &amp; Library Expansion</h3>
+          <div class="stat-num">82% Done</div>
+          <p>Phase II Digital Campus on schedule</p>
+        </div>
+      </div>
+
+      <h2 style="color: #1a365d; margin-top: 2.2rem;">Board Resolutions &amp; Capital Projects</h2>
+      <table class="dash-table">
+        <thead>
+          <tr>
+            <th>Project / Resolution</th>
+            <th>Department Lead</th>
+            <th>Budget Allocation</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>New Solar Backup &amp; Smart Classrooms</td><td>Estates &amp; Infrastructure</td><td>UGX 185,000,000</td><td><strong>In Progress</strong></td></tr>
+          <tr><td>2027 Merit Scholarship Endowment</td><td>Finance &amp; Headteacher</td><td>UGX 60,000,000</td><td><strong>Approved</strong></td></tr>
+          <tr><td>Staff Welfare &amp; Annual Audit Review</td><td>Board Audit Committee</td><td>UGX 42,000,000</td><td><strong>Completed</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <footer><div class="container"><p>&copy; 2026 Kawa Academy Board of Directors &bull; Confidential Governance Portal.</p></div></footer>
+  <script src="buttons.js"></script>
+</body>
+</html>

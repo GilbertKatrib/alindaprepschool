@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Director of Studies (DOS) | Kawa Academy</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="badge-watermark" aria-hidden="true"></div>
+
+    <header class="navbar">
+        <div class="container nav-flex">
+            <a href="index.html" class="brand">
+                <img src="badge.png" alt="Kawa Academy Badge" class="nav-badge">
+                <div>
+                    <h1>Kawa Academy</h1>
+                    <span>Office of the Director of Studies</span>
+                </div>
+            </a>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="staff-login.html">Staff Portal</a>
+                <a href="headteacher-login.html">Head Teacher</a>
+                <a href="directors-login.html">Directors</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container single-center">
+        <section class="card auth-box">
+            <span class="role-badge">Academic Management Access</span>
+            <h2>Director of Studies (DOS) Sign In</h2>
+            <p class="subtitle">Manage primary class timetables, termly examinations, schemes of work, and academic reports.</p>
+            
+            <form id="dosLoginForm">
+                <div class="form-group">
+                    <label for="dosUsername">DOS Staff ID</label>
+                    <input type="text" id="dosUsername" placeholder="e.g. DOS-KAWA-01" required>
+                </div>
+                <div class="form-group">
+                    <label for="dosPassword">DOS Password</label>
+                    <input type="password" id="dosPassword" placeholder="Enter DOS password" required>
+                </div>
+                <button type="submit" class="btn-primary full-width">Access DOS Academic Dashboard</button>
+            </form>
+            <div id="dosFeedback" class="feedback-msg"></div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

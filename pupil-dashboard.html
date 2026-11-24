@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pupil Dashboard | Kawa Primary Academy</title>
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+<body>
+    <!-- School Badge Watermark -->
+    <div class="badge-watermark" aria-hidden="true"></div>
+
+    <header class="navbar">
+        <div class="container nav-flex">
+            <a href="index.html" class="brand">
+                <img src="badge.png" alt="Kawa Academy Badge" class="nav-badge">
+                <div>
+                    <h1>Kawa Academy</h1>
+                    <span>Pupil Learning Dashboard</span>
+                </div>
+            </a>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="pupil-login.html" class="btn-outline">Sign Out</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container" style="margin-top: 32px; margin-bottom: 48px;">
+        <!-- Pupil Profile Header -->
+        <section class="card highlight-card" style="margin-bottom: 24px;">
+            <span class="role-badge gold">Active Pupil Session</span>
+            <h2 id="pupilWelcomeName">Welcome, Amina Namukasa</h2>
+            <p class="subtitle" id="pupilDetailsSub">Admission No: KA-2026-001 | Class: Primary Six (P.6)</p>
+        </section>
+
+        <!-- Termly Results & Homework Grid -->
+        <div class="portal-grid" style="margin-top: 0;">
+            <section class="card">
+                <h2>Termly Assessment Marks</h2>
+                <p class="subtitle">Mid-Term Examination Performance</p>
+                <ul style="margin-left: 20px; line-height: 2;">
+                    <li><strong>Mathematics:</strong> 88% (D1) – Excellent</li>
+                    <li><strong>English Language:</strong> 84% (D2) – Very Good</li>
+                    <li><strong>Integrated Science:</strong> 90% (D1) – Top Performer</li>
+                    <li><strong>Social Studies (SST):</strong> 81% (D2) – Keep It Up</li>
+                </ul>
+            </section>
+
+            <section class="card">
+                <h2>Class Notices & Homework</h2>
+                <p class="subtitle">Updates from your Class Teacher</p>
+                <ul style="margin-left: 20px; line-height: 2;">
+                    <li><strong>Mathematics:</strong> Complete Exercise 4B (Fractions) by Friday.</li>
+                    <li><strong>Science:</strong> Draw and label parts of a flowering plant in your science book.</li>
+                    <li><strong>Assembly:</strong> Friday general assembly starts at 8:00 AM sharp in full school uniform.</li>
+                </ul>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Kawa Academy Primary School. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    <script src="app.js" defer></script>
+</body>
+</html>
