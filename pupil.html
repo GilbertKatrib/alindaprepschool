@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pupil Portal | Alinda Preparatory School</title>
+
+    <meta name="robots" content="noindex, nofollow">
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <!-- Pupil navigation -->
+    <header class="navbar">
+
+        <div class="brand">
+
+            <div class="brand-badge">APS</div>
+
+            <div>
+                <h1>ALINDA PREPARATORY SCHOOL</h1>
+                <small>Pupil & Parent Portal</small>
+            </div>
+
+        </div>
+
+        <nav class="nav-actions">
+
+            <a href="index.html" class="btn btn-yellow">
+                Home
+            </a>
+
+            <button
+                class="btn btn-outline"
+                id="logoutBtn"
+            >
+                Sign Out
+            </button>
+
+        </nav>
+
+    </header>
+
+
+    <main class="container">
+
+        <!-- Pupil information -->
+        <section class="card gold-top">
+
+            <p class="eyebrow">Pupil Portal</p>
+
+            <h2 id="pupilName">
+                Loading pupil account...
+            </h2>
+
+            <p id="pupilMeta">
+                Loading school information...
+            </p>
+
+        </section>
+
+
+        <!-- Financial overview -->
+        <div class="grid-3">
+
+            <section class="card">
+
+                <h3>Outstanding Fee Balance</h3>
+
+                <h2 id="feeBalance">—</h2>
+
+                <p id="feeStatus">
+                    Finance information
+                </p>
+
+            </section>
+
+
+            <section class="card">
+
+                <h3>Food Status</h3>
+
+                <p id="foodStatus">—</p>
+
+            </section>
+
+
+            <section class="card">
+
+                <h3>Uniform Status</h3>
+
+                <p id="uniformStatus">—</p>
+
+            </section>
+
+        </div>
+
+
+        <!-- Academic results -->
+        <section class="card">
+
+            <h3>Academic Results</h3>
+
+            <div class="table-wrap">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>Term</th>
+                            <th>Subject</th>
+                            <th>Score</th>
+                            <th>Grade</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="marksBody">
+
+                        <tr>
+                            <td colspan="4">
+                                Loading academic results...
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- School notices -->
+        <section class="card">
+
+            <h3>School Notices</h3>
+
+            <div id="pupilNotices">
+                Loading notices...
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <p>
+            &copy; 2026 Alinda Preparatory School - Kanara.
+            Education for a Bright Future.
+        </p>
+
+    </footer>
+
+
+    <script type="module">
+
+        // Firebase connection.
+        import { auth, db } from "./firebase-config.js";
+
+        import {
+            onAuthStateChanged,
+            signOut
+        } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
+
+        import {
+            doc,
+            getDoc,
+            collection,
+            getDocs,
+            query,
+            where,
+            orderBy,
+            limit,
+            onSnapshot
+        } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
+
+
+        const $ = id => document.getElementById(id);
+
+
+        // Format money using Ugandan Shillings.
+        function money(amount) {
+
+            return `UGX ${Number(amount || 0).toLocaleString("en-UG")}`;
+
+        }
+
+
+        // Check the pupil's login and load their information.
+        onAuthStateChanged(auth, async user => {
+
+            if (!user) {
+
+                location.replace("index.html");
+
+                return;
+
+            }
+
+            try {
+
+                // Read the signed-in pupil's account.
+                const account = await getDoc(
+                    doc(db, "users", user.uid)
+                );
+
+                if (
+                    !account.exists() ||
+                    account.data().role !== "pupil"
+                ) {
+
+                    alert("This account is not registered as a pupil.");
+
+                    location.replace("index.html");
+
+                    return;
+
+                }
+
+
+                const profile = account.data();
+
+                const admissionNo =
+                    profile.admissionNo || profile.pupilId;
+
+
+                $("pupilName").textContent =
+                    profile.fullName || "Pupil Portal";
+
+
+                if (!admissionNo) {
+
+                    $("pupilMeta").textContent =
+                        "Your account has no admission number. Contact the school office.";
+
+                    return;
+
+                }
+
+
+                $("pupilMeta").textContent =
+                    `Admission Number: ${admissionNo}` +
+                    (profile.classLevel
+                        ? ` | Class: ${profile.classLevel}`
+                        : "");
+
+
+                // Load the pupil's financial record.
+                const pupilRecords = await getDocs(
+                    query(
+                        collection(db, "pupils"),
+                        where("admissionNo", "==", admissionNo),
+                        limit(1)
+                    )
+                );
+
+
+                if (!pupilRecords.empty) {
+
+                    const record = pupilRecords.docs[0].data();
+
+                    $("feeBalance").textContent =
+                        money(record.feeBalance);
+
+                    $("feeStatus").textContent =
+                        "Outstanding school fees";
+
+                    $("foodStatus").textContent =
+                        record.foodStatus || "Not updated";
+
+                    $("uniformStatus").textContent =
+                        record.uniformStatus || "Not updated";
+
+                } else {
+
+                    $("feeBalance").textContent = "Unavailable";
+
+                    $("feeStatus").textContent =
+                        "Contact the school bursar.";
+
+                }
+
+
+                // Load marks belonging to this pupil.
+                const marks = await getDocs(
+                    query(
+                        collection(db, "pupil_marks"),
+                        where("pupilId", "==", admissionNo)
+                    )
+                );
+
+
+                const marksBody = $("marksBody");
+
+                marksBody.replaceChildren();
+
+
+                if (marks.empty) {
+
+                    marksBody.innerHTML =
+                        '<tr><td colspan="4">No academic results have been published yet.</td></tr>';
+
+                } else {
+
+                    marks.forEach(document => {
+
+                        const mark = document.data();
+
+                        const row = document.createElement("tr");
+
+                        const values = [
+
+                            mark.term || "—",
+
+                            mark.subject || "—",
+
+                            mark.score ?? "—",
+
+                            mark.grade || "—"
+
+                        ];
+
+
+                        values.forEach(value => {
+
+                            const cell = document.createElement("td");
+
+                            cell.textContent = String(value);
+
+                            row.appendChild(cell);
+
+                        });
+
+
+                        marksBody.appendChild(row);
+
+                    });
+
+                }
+
+
+                // Listen for school announcements.
+                onSnapshot(
+                    query(
+                        collection(db, "school_notices"),
+                        orderBy("createdAt", "desc"),
+                        limit(10)
+                    ),
+
+                    snapshot => {
+
+                        const box = $("pupilNotices");
+
+                        box.replaceChildren();
+
+
+                        if (snapshot.empty) {
+
+                            box.textContent =
+                                "No current school announcements.";
+
+                            return;
+
+                        }
+
+
+                        snapshot.forEach(document => {
+
+                            const notice = document.data();
+
+                            const article =
+                                document.createElement("article");
+
+                            article.className = "card";
+
+                            const title =
+                                document.createElement("h4");
+
+                            title.textContent =
+                                notice.title || "School Notice";
+
+                            const message =
+                                document.createElement("p");
+
+                            message.textContent =
+                                notice.body || "";
+
+                            article.append(title, message);
+
+                            box.appendChild(article);
+
+                        });
+
+                    },
+
+                    error => {
+
+                        console.error(error);
+
+                        $("pupilNotices").textContent =
+                            "Unable to load school notices.";
+
+                    }
+
+                );
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                $("pupilMeta").textContent =
+                    "Unable to load your school information.";
+
+            }
+
+        });
+
+
+        // Sign out.
+        $("logoutBtn").addEventListener("click", async () => {
+
+            await signOut(auth);
+
+            location.replace("index.html");
+
+        });
+
+    </script>
+
+</body>
+</html>

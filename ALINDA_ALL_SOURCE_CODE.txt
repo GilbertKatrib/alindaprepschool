@@ -1,0 +1,1582 @@
+ALINDA PREPARATORY SCHOOL - KANARA
+COMPLETE WEBSITE SOURCE CODE
+
+HOW TO USE: Find each FILE: heading, then copy its code into a VS Code file with that exact filename.
+Keep all these files in the same project folder. style.css is separate and was supplied earlier.
+NOTE: These files require a local web server and correctly configured Firebase Auth/Firestore rules.
+
+==========================================================================================
+FILE: firebase-config.js
+==========================================================================================
+
+// Alinda Preparatory School - Kanara
+// Firebase web configuration. Access control must be enforced with Firestore Security Rules.
+import { initializeApp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDI8Jd318evXwMOQihfz2d0etA4gL66H9M",
+  authDomain: "alinda-prep-kanara.firebaseapp.com",
+  projectId: "alinda-prep-kanara",
+  storageBucket: "alinda-prep-kanara.firebasestorage.app",
+  messagingSenderId: "943914685053",
+  appId: "1:943914685053:web:c1aa8741754714a801d714",
+  measurementId: "G-W8NMNT2M7N"
+};
+
+export const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
+export const db = getFirestore(app);
+
+
+==========================================================================================
+FILE: index.html
+==========================================================================================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alinda Preparatory School - Kanara | Education for a Bright Future</title>
+  <meta name="description" content="Official website of Alinda Preparatory School - Kanara. View PLE UNEB performance, school fees structure, co-curricular activities, and verified portals." />
+  <meta name="robots" content="index, follow" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="brand">
+      <div class="brand-badge">APS</div>
+      <div>
+        <h1>ALINDA PREPARATORY SCHOOL - KANARA</h1>
+        <small>Motto: "EDUCATION FOR A BRIGHT FUTURE"</small>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <a href="index.html" class="btn btn-yellow">Home</a>
+      <button class="btn btn-outline" id="openVerifyBtn">Verify Visitor Access</button>
+      <button class="btn btn-green" id="openPortalLoginBtn">Portal Sign In</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <span class="motto-tag">EDUCATION FOR A BRIGHT FUTURE</span>
+    <h2>Welcome to Alinda Preparatory School - Kanara</h2>
+    <p>Nurturing disciplined, confident, and academically excellent learners from Nursery through Primary Seven (P.7) in a safe, supportive environment.</p>
+    <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+      <a href="#uneb-section" class="btn btn-yellow">PLE UNEB Performance</a>
+      <a href="#fees-section" class="btn btn-outline">Fees Structure</a>
+      <a href="gallery.html" class="btn btn-green">School Activities & Gallery</a>
+    </div>
+  </section>
+
+  <main class="container">
+
+    <section id="updates-section">
+      <h3 class="section-title">Official School Notices & Administration Updates</h3>
+      <div class="grid-3" id="liveSchoolNotices">
+        <div class="card">
+          <h4>Loading School Updates...</h4>
+          <p>Fetching latest notices from Head Teacher & Board of Directors.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="uneb-section">
+      <h3 class="section-title">PLE UNEB Academic Performance</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Exam Year</th>
+              <th>Total Candidates</th>
+              <th>Division 1</th>
+              <th>Division 2</th>
+              <th>Pass Rate</th>
+              <th>Best Aggregate</th>
+            </tr>
+          </thead>
+          <tbody id="unebTableBody">
+            <tr><td colspan="6">Loading verified UNEB PLE records...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="fees-section">
+      <h3 class="section-title">Termly School Fees Structure (UGX)</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Class Section</th>
+              <th>Day Tuition</th>
+              <th>Boarding Tuition</th>
+              <th>School Feeding (Cash Option)</th>
+              <th>Uniform Package</th>
+            </tr>
+          </thead>
+          <tbody id="feesTableBody">
+            <tr><td colspan="5">Loading current fees structure...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="activities-section">
+      <h3 class="section-title">Co-Curricular & School Life Activities</h3>
+      <div class="grid-3">
+        <div class="card">
+          <h4>Academics & ICT Lab</h4>
+          <p>Competency-based thematic learning, weekly P.7 PLE revision clinics, computer literacy, and practical science.</p>
+        </div>
+        <div class="card gold-top">
+          <h4>Sports, Athletics & Scouting</h4>
+          <p>Football, netball, athletics, MDD (Music, Dance & Drama), debate clubs, and leadership grooming.</p>
+        </div>
+        <div class="card">
+          <h4>Child Welfare & Feeding</h4>
+          <p>Nutritious school meals (parents can pay cash or send packed food) and dedicated sick-bay & guidance care.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="verifiedExtendedSection" class="card gold-top">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+        <div>
+          <h3>Extended Prospectus, Admissions & Virtual Campus Tour</h3>
+          <p id="verifyStatusText" style="color:var(--text-muted); margin-top:4px;">
+            Verify your parent/visitor code or sign in to unlock full admission forms, transport routes, and detailed gallery access.
+          </p>
+        </div>
+        <button class="btn btn-green" id="unlockExtraBtn">Unlock Full Details</button>
+      </div>
+      <div id="unlockedContent" style="display:none; margin-top:18px; border-top:1px solid #e2e8f0; padding-top:16px;">
+        <p><strong>Verified Visitor Access Active!</strong> You now have full access to:</p>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+          <a href="gallery.html" class="btn btn-yellow">Open Full School Activity Gallery</a>
+          <button class="btn btn-green" id="openAdmissionModalBtn">Apply for Child Vacancy</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- VISITOR VERIFICATION MODAL -->
+  <div class="modal" id="verifyModal">
+    <div class="modal-box">
+      <h3 style="color:var(--green-dark); margin-bottom:8px;">Verify Visitor / Parent Access</h3>
+      <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:12px;">Enter your contact and the verification passcode issued by Alinda Preparatory School - Kanara.</p>
+      <form id="visitorVerifyForm">
+        <label>Full Name</label>
+        <input type="text" id="visitorName" required placeholder="e.g., Grace Nansubuga" />
+        <label>Phone Number or Email</label>
+        <input type="text" id="visitorContact" required placeholder="e.g., 0772000000" />
+        <label>School Verification Code</label>
+        <input type="password" id="visitorCode" required placeholder="Enter office verification code" />
+        <div style="display:flex; gap:10px; justify-content:flex-end;">
+          <button type="button" class="btn" id="closeVerifyModal">Cancel</button>
+          <button type="submit" class="btn btn-green">Verify & Unlock</button>
+        </div>
+      </form>
+      <p id="verifyMsg" style="margin-top:10px; font-weight:600; color:#b91c1c;"></p>
+    </div>
+  </div>
+
+  <!-- VERIFIED ONLINE ADMISSION APPLICATION MODAL -->
+  <div class="modal" id="admissionModal">
+    <div class="modal-box">
+      <h3 style="color:var(--green-dark); margin-bottom:8px;">Pupil Vacancy Application</h3>
+      <form id="publicAdmissionForm">
+        <label>Child's Full Name</label>
+        <input type="text" id="admChildName" required />
+        <label>Class Applying For</label>
+        <select id="admChildClass" required>
+          <option value="Baby Class">Baby Class</option>
+          <option value="Middle Class">Middle Class</option>
+          <option value="Top Class">Top Class</option>
+          <option value="P.1">Primary One (P.1)</option>
+          <option value="P.2">Primary Two (P.2)</option>
+          <option value="P.3">Primary Three (P.3)</option>
+          <option value="P.4">Primary Four (P.4)</option>
+          <option value="P.5">Primary Five (P.5)</option>
+          <option value="P.6">Primary Six (P.6)</option>
+          <option value="P.7">Primary Seven (P.7)</option>
+        </select>
+        <label>Parent / Guardian Name</label>
+        <input type="text" id="admParentName" required />
+        <label>Parent Phone Number</label>
+        <input type="tel" id="admParentPhone" required />
+        <div style="display:flex; gap:10px; justify-content:flex-end;">
+          <button type="button" class="btn" id="closeAdmissionModal">Cancel</button>
+          <button type="submit" class="btn btn-yellow">Submit Application</button>
+        </div>
+      </form>
+      <p id="admMsg" style="margin-top:10px; font-weight:600; color:var(--green-primary);"></p>
+    </div>
+  </div>
+
+  <!-- ROLE-BASED FIREBASE SIGN-IN MODAL -->
+  <div class="modal" id="loginModal">
+    <div class="modal-box">
+      <h3 style="color:var(--green-dark); margin-bottom:8px;">Alinda Preparatory Portal Login</h3>
+      <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:12px;">Sign in with your school email and password. Passwords are securely encrypted by Firebase Auth.</p>
+      <form id="firebaseLoginForm">
+        <label>School Email</label>
+        <input type="email" id="loginEmail" required placeholder="user@alindaprep.ac.ug" />
+        <label>Password</label>
+        <input type="password" id="loginPassword" required placeholder="••••••••" />
+        <div style="display:flex; gap:10px; justify-content:flex-end;">
+          <button type="button" class="btn" id="closeLoginModal">Cancel</button>
+          <button type="submit" class="btn btn-yellow">Sign In</button>
+        </div>
+      </form>
+      <p id="loginMsg" style="margin-top:10px; color:#b91c1c; font-weight:600;"></p>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Alinda Preparatory School - Kanara. <strong>"Education for a Bright Future"</strong></p>
+  </footer>
+
+  <script type="module">
+    import { auth, db } from "./firebase-config.js";
+    import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
+    import {
+      collection, getDocs, doc, getDoc, addDoc, serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
+
+    const byId = (id) => document.getElementById(id);
+    const showModal = (id) => byId(id)?.classList.add("open");
+    const hideModal = (id) => byId(id)?.classList.remove("open");
+    const money = (value) => `UGX ${Number(value || 0).toLocaleString("en-UG")}`;
+
+    function addCell(row, value, strong = false) {
+      const cell = document.createElement("td");
+      if (strong) {
+        const b = document.createElement("strong");
+        b.textContent = value ?? "—";
+        cell.appendChild(b);
+      } else {
+        cell.textContent = value ?? "—";
+      }
+      row.appendChild(cell);
+    }
+
+    async function loadPublicSchoolData() {
+      const noticesContainer = byId("liveSchoolNotices");
+      const unebBody = byId("unebTableBody");
+      const feesBody = byId("feesTableBody");
+
+      try {
+        const [noticesSnap, unebSnap, feesSnap] = await Promise.all([
+          getDocs(collection(db, "school_notices")),
+          getDocs(collection(db, "uneb_results")),
+          getDocs(collection(db, "fees_structure"))
+        ]);
+
+        noticesContainer.replaceChildren();
+        if (noticesSnap.empty) {
+          const card = document.createElement("div");
+          card.className = "card";
+          const title = document.createElement("h4");
+          title.textContent = "School updates";
+          const message = document.createElement("p");
+          message.textContent = "New notices from the school administration will appear here.";
+          card.append(title, message);
+          noticesContainer.appendChild(card);
+        } else {
+          noticesSnap.forEach((itemDoc) => {
+            const item = itemDoc.data();
+            const card = document.createElement("article");
+            card.className = "card gold-top";
+            const author = document.createElement("small");
+            author.className = "eyebrow";
+            author.textContent = item.postedBy || "Administration";
+            const title = document.createElement("h4");
+            title.textContent = item.title || "School notice";
+            const body = document.createElement("p");
+            body.textContent = item.body || "";
+            card.append(author, title, body);
+            noticesContainer.appendChild(card);
+          });
+        }
+
+        unebBody.replaceChildren();
+        if (unebSnap.empty) {
+          unebBody.innerHTML = '<tr><td colspan="6">PLE results will appear here when officially published by the school.</td></tr>';
+        } else {
+          unebSnap.forEach((itemDoc) => {
+            const r = itemDoc.data();
+            const row = document.createElement("tr");
+            addCell(row, r.year, true);
+            addCell(row, r.candidates);
+            addCell(row, r.div1);
+            addCell(row, r.div2);
+            addCell(row, r.passRate == null ? "—" : `${r.passRate}%`, true);
+            addCell(row, r.bestAgg);
+            unebBody.appendChild(row);
+          });
+        }
+
+        feesBody.replaceChildren();
+        if (feesSnap.empty) {
+          feesBody.innerHTML = '<tr><td colspan="5">The school office will publish the current termly fees structure here.</td></tr>';
+        } else {
+          feesSnap.forEach((itemDoc) => {
+            const f = itemDoc.data();
+            const row = document.createElement("tr");
+            addCell(row, f.section, true);
+            addCell(row, money(f.dayFee));
+            addCell(row, money(f.boardingFee));
+            addCell(row, money(f.foodFee));
+            addCell(row, money(f.uniformFee));
+            feesBody.appendChild(row);
+          });
+        }
+      } catch (error) {
+        console.error("Unable to load public school information:", error);
+        noticesContainer.textContent = "School updates are temporarily unavailable. Please try again later.";
+        unebBody.innerHTML = '<tr><td colspan="6">Results are temporarily unavailable.</td></tr>';
+        feesBody.innerHTML = '<tr><td colspan="5">Fees information is temporarily unavailable.</td></tr>';
+      }
+    }
+
+    loadPublicSchoolData();
+
+    byId("openVerifyBtn")?.addEventListener("click", () => showModal("verifyModal"));
+    byId("unlockExtraBtn")?.addEventListener("click", () => showModal("verifyModal"));
+    byId("closeVerifyModal")?.addEventListener("click", () => hideModal("verifyModal"));
+    byId("openAdmissionModalBtn")?.addEventListener("click", () => showModal("admissionModal"));
+    byId("closeAdmissionModal")?.addEventListener("click", () => hideModal("admissionModal"));
+    byId("openPortalLoginBtn")?.addEventListener("click", () => showModal("loginModal"));
+    byId("closeLoginModal")?.addEventListener("click", () => hideModal("loginModal"));
+
+    ["verifyModal", "admissionModal", "loginModal"].forEach((id) => {
+      byId(id)?.addEventListener("click", (event) => {
+        if (event.target.id === id) hideModal(id);
+      });
+    });
+
+    if (sessionStorage.getItem("alinda_verified") === "true") {
+      byId("unlockedContent").style.display = "block";
+      byId("verifyStatusText").textContent = "Verified visitor session active.";
+    }
+
+    byId("visitorVerifyForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const message = byId("verifyMsg");
+      message.textContent = "Checking your access code…";
+      try {
+        // A passcode must be configured in Firestore settings/publicAccess.
+        // No hard-coded fallback code is used.
+        const configDoc = await getDoc(doc(db, "settings", "publicAccess"));
+        const validCode = configDoc.exists() ? configDoc.data().visitorPasscode : null;
+        const enteredCode = byId("visitorCode").value.trim();
+
+        if (!validCode || enteredCode !== validCode) {
+          message.textContent = "The code could not be verified. Please contact the school office.";
+          return;
+        }
+
+        await addDoc(collection(db, "verified_visitors"), {
+          name: byId("visitorName").value.trim(),
+          contact: byId("visitorContact").value.trim(),
+          verifiedAt: serverTimestamp()
+        });
+        sessionStorage.setItem("alinda_verified", "true");
+        byId("unlockedContent").style.display = "block";
+        byId("verifyStatusText").textContent = "Visitor access verified for this browser session.";
+        byId("visitorVerifyForm").reset();
+        message.textContent = "";
+        hideModal("verifyModal");
+      } catch (error) {
+        console.error("Visitor verification failed:", error);
+        message.textContent = "Verification is temporarily unavailable. Please contact the school office.";
+      }
+    });
+
+    byId("publicAdmissionForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const message = byId("admMsg");
+      message.textContent = "Submitting application…";
+      try {
+        await addDoc(collection(db, "admissions"), {
+          childName: byId("admChildName").value.trim(),
+          childClass: byId("admChildClass").value,
+          parentName: byId("admParentName").value.trim(),
+          parentPhone: byId("admParentPhone").value.trim(),
+          status: "Pending",
+          submittedAt: serverTimestamp()
+        });
+        message.textContent = "Application received. The school office will contact you.";
+        byId("publicAdmissionForm").reset();
+      } catch (error) {
+        console.error("Admission submission failed:", error);
+        message.textContent = "We could not submit the application. Please try again later.";
+      }
+    });
+
+    byId("firebaseLoginForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const message = byId("loginMsg");
+      message.textContent = "Signing in…";
+      try {
+        const credential = await signInWithEmailAndPassword(
+          auth, byId("loginEmail").value.trim(), byId("loginPassword").value
+        );
+        const userDoc = await getDoc(doc(db, "users", credential.user.uid));
+        if (!userDoc.exists()) {
+          message.textContent = "This account has no school role. Please contact the administrator.";
+          return;
+        }
+        const routes = {
+          pupil: "pupil.html",
+          staff: "staff.html",
+          dos: "dos.html",
+          bursar: "bursar.html",
+          headteacher: "headteacher.html",
+          director: "directors.html"
+        };
+        const destination = routes[userDoc.data().role];
+        if (!destination) {
+          message.textContent = "This account has an unrecognized role. Please contact the administrator.";
+          return;
+        }
+        window.location.assign(destination);
+      } catch (error) {
+        console.error("Portal sign-in failed:", error);
+        message.textContent = "Sign-in failed. Check your details or contact the school administrator.";
+      }
+    });
+  </script>
+</body>
+</html>
+
+
+==========================================================================================
+FILE: staff.html
+==========================================================================================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Staff Portal | Alinda Preparatory School - Kanara</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="brand">
+      <div class="brand-badge">APS</div>
+      <div>
+        <h1>ALINDA PREPARATORY SCHOOL - KANARA</h1>
+        <small>Education for a Bright Future</small>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <a href="index.html" class="btn btn-yellow">Home</a>
+      <span class="nav-pill" id="staffNavTitle">Staff Room Portal</span>
+      <button class="btn btn-outline" id="logoutBtn">Sign Out</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="grid-3">
+      <!-- 1. CLASS PRESENCE CHECK-IN (SYNCS TO DOS) -->
+      <section class="card gold-top">
+        <h3 class="section-title">Daily Class Presence Check-In</h3>
+        <form id="classPresenceForm">
+          <label>Teacher Name</label>
+          <input type="text" id="presTeacherName" required />
+          <label>Class Currently Teaching</label>
+          <select id="presClass" required>
+            <option value="Nursery">Nursery</option>
+            <option value="P.1">P.1</option>
+            <option value="P.2">P.2</option>
+            <option value="P.3">P.3</option>
+            <option value="P.4">P.4</option>
+            <option value="P.5">P.5</option>
+            <option value="P.6">P.6</option>
+            <option value="P.7">P.7</option>
+          </select>
+          <label>Subject / Lesson Session</label>
+          <input type="text" id="presSubject" required placeholder="e.g., Mathematics (8:30 AM)" />
+          <label>Attendance Status</label>
+          <select id="presStatus" required>
+            <option value="Present in Class">Present in Class</option>
+            <option value="On School Duty">On School Duty</option>
+            <option value="Excused / Leave">Excused / Leave</option>
+          </select>
+          <button type="submit" class="btn btn-green" style="width:100%; justify-content:center;">Update Class Presence</button>
+        </form>
+        <p id="presMsg" style="margin-top:8px; font-weight:700; color:var(--green-primary);"></p>
+      </section>
+
+      <!-- 2. SUBMIT LESSON PLAN TO DOS -->
+      <section class="card">
+        <h3 class="section-title">Submit Lesson Plan to DOS</h3>
+        <form id="lessonPlanForm">
+          <label>Teacher Name</label>
+          <input type="text" id="lpTeacher" required />
+          <label>Class & Subject</label>
+          <input type="text" id="lpClassSubject" required placeholder="e.g., P.6 Integrated Science" />
+          <label>Topic & Sub-topic</label>
+          <input type="text" id="lpTopic" required />
+          <label>Lesson Objectives & Activities</label>
+          <textarea id="lpContent" rows="3" required></textarea>
+          <button type="submit" class="btn btn-yellow" style="width:100%; justify-content:center;">Send Lesson Plan to DOS</button>
+        </form>
+        <p id="lpMsg" style="margin-top:8px; font-weight:700; color:var(--green-primary);"></p>
+      </section>
+
+      <!-- 3. INTERNAL STAFF REQUEST TO DIRECTORS -->
+      <section class="card gold-top">
+        <h3 class="section-title">Confidential Request to Directors</h3>
+        <form id="staffReqForm">
+          <label>Your Name</label>
+          <input type="text" id="reqTeacher" required />
+          <label>Request Type</label>
+          <select id="reqType" required>
+            <option value="Classroom Materials">Classroom Materials</option>
+            <option value="Leave / Permission">Leave / Permission</option>
+            <option value="Staff Welfare / Advance">Staff Welfare / Advance</option>
+          </select>
+          <label>Details</label>
+          <textarea id="reqDetails" rows="3" required></textarea>
+          <button type="submit" class="btn btn-green" style="width:100%; justify-content:center;">Submit Confidentially</button>
+        </form>
+        <p id="reqMsg" style="margin-top:8px; font-weight:700; color:var(--green-primary);"></p>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Alinda Preparatory School - Kanara • Education for a Bright Future</p>
+  </footer>
+
+  <script type="module">
+    import { auth, db } from "./firebase-config.js";
+    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
+    import { doc, getDoc, setDoc, addDoc, collection, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) { window.location.href = "index.html"; return; }
+      const uDoc = await getDoc(doc(db, "users", user.uid));
+      if (!uDoc.exists() || !["staff", "dos", "headteacher", "director"].includes(uDoc.data().role)) {
+        window.location.href = "index.html";
+        return;
+      }
+      const name = uDoc.data().fullName || user.email;
+      document.getElementById("staffNavTitle").textContent = `Staff Page: ${name}`;
+      document.getElementById("presTeacherName").value = name;
+      document.getElementById("lpTeacher").value = name;
+      document.getElementById("reqTeacher").value = name;
+    });
+
+    document.getElementById("classPresenceForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const cls = document.getElementById("presClass").value;
+      await setDoc(doc(db, "teacher_presence", cls), {
+        classLevel: cls,
+        teacherName: document.getElementById("presTeacherName").value.trim(),
+        subject: document.getElementById("presSubject").value.trim(),
+        status: document.getElementById("presStatus").value,
+        updatedAt: serverTimestamp()
+      });
+      document.getElementById("presMsg").textContent = `Presence updated for ${cls} on DOS board!`;
+    });
+
+    document.getElementById("lessonPlanForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      await addDoc(collection(db, "lesson_plans"), {
+        teacherName: document.getElementById("lpTeacher").value.trim(),
+        classSubject: document.getElementById("lpClassSubject").value.trim(),
+        topic: document.getElementById("lpTopic").value.trim(),
+        content: document.getElementById("lpContent").value.trim(),
+        status: "Submitted for DOS Review",
+        createdAt: serverTimestamp()
+      });
+      document.getElementById("lpMsg").textContent = "Lesson plan sent to Director of Studies!";
+      document.getElementById("lpTopic").value = "";
+      document.getElementById("lpContent").value = "";
+    });
+
+    document.getElementById("staffReqForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      await addDoc(collection(db, "staff_requests"), {
+        teacherName: document.getElementById("reqTeacher").value.trim(),
+        type: document.getElementById("reqType").value,
+        details: document.getElementById("reqDetails").value.trim(),
+        status: "Pending",
+        createdAt: serverTimestamp()
+      });
+      document.getElementById("reqMsg").textContent = "Confidential request sent to Head Teacher & Directors.";
+      document.getElementById("reqDetails").value = "";
+    });
+
+    document.getElementById("logoutBtn").onclick = async () => {
+      await signOut(auth);
+      window.location.href = "index.html";
+    };
+  </script>
+</body>
+</html>
+
+
+==========================================================================================
+FILE: dos.html
+==========================================================================================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Director of Studies (DOS) | Alinda Preparatory School - Kanara</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="brand">
+      <div class="brand-badge">APS</div>
+      <div>
+        <h1>ALINDA PREPARATORY SCHOOL - KANARA</h1>
+        <small>Education for a Bright Future</small>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <a href="index.html" class="btn btn-yellow">Home</a>
+      <span class="nav-pill">Director of Studies (DOS) Portal</span>
+      <button class="btn btn-outline" id="logoutBtn">Sign Out</button>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- 1. TEACHERS PRESENT IN EVERY CLASS -->
+    <section>
+      <h3 class="section-title">Live Teachers Present in Every Class</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Class</th>
+              <th>Teacher Assigned / Checked In</th>
+              <th>Subject / Lesson</th>
+              <th>Presence Status</th>
+            </tr>
+          </thead>
+          <tbody id="dosPresenceBody">
+            <tr><td colspan="4">Loading live classroom attendance...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 2. CLASS TIMETABLES (MANAGE & VIEW) -->
+    <section>
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
+        <h3 class="section-title" style="margin-bottom:0;">Master Class Timetables</h3>
+        <button class="btn btn-green" id="openTimetableModalBtn">+ Add Timetable Slot</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Class</th>
+              <th>Day</th>
+              <th>Time Slot</th>
+              <th>Subject</th>
+              <th>Teacher</th>
+            </tr>
+          </thead>
+          <tbody id="dosTimetableBody">
+            <tr><td colspan="5">Loading class timetables...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 3. TEACHERS' LESSON PLANS -->
+    <section>
+      <h3 class="section-title">Teachers' Submitted Lesson Plans</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Teacher</th>
+              <th>Class & Subject</th>
+              <th>Topic</th>
+              <th>Objectives / Notes</th>
+              <th>Status</th>
+              <th>DOS Action</th>
+            </tr>
+          </thead>
+          <tbody id="dosLessonPlansBody">
+            <tr><td colspan="6">Loading lesson plans...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 4. EVERY STUDENT'S MARKS (RECORD & VIEW ALL) -->
+    <section>
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
+        <h3 class="section-title" style="margin-bottom:0;">All Pupils' Academic Marks</h3>
+        <button class="btn btn-yellow" id="openMarksModalBtn">+ Record Pupil Marks</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Pupil ID / Adm No</th>
+              <th>Pupil Name</th>
+              <th>Class</th>
+              <th>Subject</th>
+              <th>Score (%)</th>
+              <th>Grade</th>
+            </tr>
+          </thead>
+          <tbody id="dosAllMarksBody">
+            <tr><td colspan="6">Loading pupils' marks...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ADD TIMETABLE SLOT MODAL -->
+  <div class="modal" id="timetableModal">
+    <div class="modal-box">
+      <h3 style="color:var(--green-dark); margin-bottom:10px;">Add Class Timetable Entry</h3>
+      <form id="timetableForm">
+        <label>Class</label>
+        <select id="ttClass" required>
+          <option value="Nursery">Nursery</option>
+          <option value="P.1">P.1</option>
+          <option value="P.2">P.2</option>
+          <option value="P.3">P.3</option>
+          <option value="P.4">P.4</option>
+          <option value="P.5">P.5</option>
+          <option value="P.6">P.6</option>
+          <option value="P.7">P.7</option>
+        </select>
+        <label>Day of Week</label>
+        <select id="ttDay" required>
+          <option value="Monday">Monday</option>
+          <option value="Tuesday">Tuesday</option>
+          <option value="Wednesday">Wednesday</option>
+          <option value="Thursday">Thursday</option>
+          <option value="Friday">Friday</option>
+        </select>
+        <label>Time Slot</label>
+        <input type="text" id="ttTime" required placeholder="e.g., 8:30 AM - 9:30 AM" />
+        <label>Subject</label>
+        <input type="text" id="ttSubject" required />
+        <label>Teacher Name</label>
+        <input type="text" id="ttTeacher" required />
+        <div style="display:flex; gap:10px; justify-content:flex-end;">
+          <button type="button" class="btn" id="closeTimetableModal">Cancel</button>
+          <button type="submit" class="btn btn-green">Save Timetable</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- RECORD PUPIL MARKS MODAL -->
+  <div class="modal" id="marksModal">
+    <div class="modal-box">
+      <h3 style="color:var(--green-dark); margin-bottom:10px;">Record Pupil Assessment Mark</h3>
+      <form id="marksForm">
+        <label>Pupil Admission No (must match Pupil ID)</label>
+        <input type="text" id="mkPupilId" required placeholder="e.g., APS-2026-01" />
+        <label>Pupil Full Name</label>
+        <input type="text" id="mkPupilName" required />
+        <label>Class</label>
+        <select id="mkClass" required>
+          <option value="Nursery">Nursery</option>
+          <option value="P.1">P.1</option>
+          <option value="P.2">P.2</option>
+          <option value="P.3">P.3</option>
+          <option value="P.4">P.4</option>
+          <option value="P.5">P.5</option>
+          <option value="P.6">P.6</option>
+          <option value="P.7">P.7</option>
+        </select>
+        <label>Subject</label>
+        <select id="mkSubject" required>
+          <option value="Mathematics">Mathematics</option>
+          <option value="English Language">English Language</option>
+          <option value="Integrated Science">Integrated Science</option>
+          <option value="Social Studies (SST)">Social Studies (SST)</option>
+          <option value="Literacy / Reading">Literacy / Reading</option>
+        </select>
+        <label>Score (%)</label>
+        <input type="number" id="mkScore" required min="0" max="100" />
+        <label>Grade (e.g., D1, D2, C3)</label>
+        <input type="text" id="mkGrade" required placeholder="D1" />
+        <div style="display:flex; gap:10px; justify-content:flex-end;">
+          <button type="button" class="btn" id="closeMarksModal">Cancel</button>
+          <button type="submit" class="btn btn-yellow">Publish Mark</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Alinda Preparatory School - Kanara • Education for a Bright Future</p>
+  </footer>
+
+  <script type="module">
+    import { auth, db } from "./firebase-config.js";
+    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
+    import { doc, getDoc, updateDoc, addDoc, collection, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) { window.location.href = "index.html"; return; }
+      const uDoc = await getDoc(doc(db, "users", user.uid));
+      if (!uDoc.exists() || !["dos", "headteacher", "director"].includes(uDoc.data().role)) {
+        window.location.href = "index.html";
+        return;
+      }
+      initDOSListeners();
+    });
+
+    function initDOSListeners() {
+      // 1. Live Teachers Present in Every Class
+      onSnapshot(collection(db, "teacher_presence"), (snap) => {
+        const tbody = document.getElementById("dosPresenceBody");
+        tbody.innerHTML = snap.empty
+          ? `<tr><td colspan="4">No teachers have checked into class yet today.</td></tr>`
+          : "";
+        snap.forEach(d => {
+          const p = d.data();
+          tbody.innerHTML += `<tr>
+            <td><strong>${p.classLevel}</strong></td>
+            <td>${p.teacherName}</td>
+            <td>${p.subject}</td>
+            <td><strong style="color:var(--green-primary);">${p.status}</strong></td>
+          </tr>`;
+        });
+      });
+
+      // 2. Class Timetables
+      onSnapshot(collection(db, "timetables"), (snap) => {
+        const tbody = document.getElementById("dosTimetableBody");
+        tbody.innerHTML = snap.empty
+          ? `<tr><td colspan="5">No timetable entries created yet.</td></tr>`
+          : "";
+        snap.forEach(d => {
+          const t = d.data();
+          tbody.innerHTML += `<tr>
+            <td><strong>${t.classLevel}</strong></td>
+            <td>${t.day}</td>
+            <td>${t.timeSlot}</td>
+            <td>${t.subject}</td>
+            <td>${t.teacherName}</td>
+          </tr>`;
+        });
+      });
+
+      // 3. Teachers' Lesson Plans
+      onSnapshot(collection(db, "lesson_plans"), (snap) => {
+        const tbody = document.getElementById("dosLessonPlansBody");
+        tbody.innerHTML = snap.empty
+          ? `<tr><td colspan="6">No lesson plans submitted yet.</td></tr>`
+          : "";
+        snap.forEach(d => {
+          const l = d.data();
+          const row = document.createElement("tr");
+          [l.teacherName, l.classSubject, l.topic, l.content, l.status || "Submitted"].forEach((value) => {
+            const cell = document.createElement("td");
+            cell.textContent = value || "—";
+            row.appendChild(cell);
+          });
+          const actionCell = document.createElement("td");
+          const approve = document.createElement("button");
+          approve.className = "btn btn-green";
+          approve.type = "button";
+          approve.textContent = "Mark Reviewed";
+          approve.addEventListener("click", async () => {
+            try {
+              await updateDoc(doc(db, "lesson_plans", d.id), {
+                status: "Reviewed by DOS",
+                reviewedAt: serverTimestamp()
+              });
+            } catch (error) {
+              console.error("Unable to update lesson plan:", error);
+              alert("Could not update this lesson plan.");
+            }
+          });
+          actionCell.appendChild(approve);
+          row.appendChild(actionCell);
+          tbody.appendChild(row);
+        });
+      });
+
+      // 4. All recorded pupil marks
+      onSnapshot(collection(db, "pupil_marks"), (snap) => {
+        const tbody = document.getElementById("dosAllMarksBody");
+        tbody.replaceChildren();
+        if (snap.empty) {
+          tbody.innerHTML = '<tr><td colspan="6">No pupil marks have been recorded yet.</td></tr>';
+          return;
+        }
+        snap.forEach((d) => {
+          const mark = d.data();
+          const row = document.createElement("tr");
+          [mark.pupilId, mark.pupilName, mark.classLevel, mark.subject,
+           mark.score == null ? "—" : `${mark.score}%`, mark.grade].forEach((value) => {
+            const cell = document.createElement("td");
+            cell.textContent = value ?? "—";
+            row.appendChild(cell);
+          });
+          tbody.appendChild(row);
+        });
+      });
+    }
+
+    const timetableModal = document.getElementById("timetableModal");
+    const marksModal = document.getElementById("marksModal");
+    document.getElementById("openTimetableModalBtn").addEventListener("click", () => timetableModal.classList.add("open"));
+    document.getElementById("closeTimetableModal").addEventListener("click", () => timetableModal.classList.remove("open"));
+    document.getElementById("openMarksModalBtn").addEventListener("click", () => marksModal.classList.add("open"));
+    document.getElementById("closeMarksModal").addEventListener("click", () => marksModal.classList.remove("open"));
+
+    document.getElementById("timetableForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      try {
+        await addDoc(collection(db, "timetables"), {
+          classLevel: document.getElementById("ttClass").value,
+          day: document.getElementById("ttDay").value,
+          timeSlot: document.getElementById("ttTime").value.trim(),
+          subject: document.getElementById("ttSubject").value.trim(),
+          teacherName: document.getElementById("ttTeacher").value.trim(),
+          createdAt: serverTimestamp()
+        });
+        document.getElementById("timetableForm").reset();
+        timetableModal.classList.remove("open");
+      } catch (error) {
+        console.error("Unable to save timetable:", error);
+        alert("Could not save the timetable entry. Check your access permissions.");
+      }
+    });
+
+    document.getElementById("marksForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const score = Number(document.getElementById("mkScore").value);
+      if (!Number.isFinite(score) || score < 0 || score > 100) {
+        alert("Enter a score between 0 and 100.");
+        return;
+      }
+      try {
+        await addDoc(collection(db, "pupil_marks"), {
+          pupilId: document.getElementById("mkPupilId").value.trim(),
+          pupilName: document.getElementById("mkPupilName").value.trim(),
+          classLevel: document.getElementById("mkClass").value,
+          subject: document.getElementById("mkSubject").value,
+          score,
+          grade: document.getElementById("mkGrade").value.trim(),
+          createdAt: serverTimestamp()
+        });
+        document.getElementById("marksForm").reset();
+        marksModal.classList.remove("open");
+      } catch (error) {
+        console.error("Unable to save pupil mark:", error);
+        alert("Could not save the pupil mark. Check your access permissions.");
+      }
+    });
+
+    document.getElementById("logoutBtn").addEventListener("click", async () => {
+      await signOut(auth);
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>
+
+
+==========================================================================================
+FILE: bursar.html
+==========================================================================================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bursar Finance Portal | Alinda Preparatory School - Kanara</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="brand">
+      <div class="brand-badge">APS</div>
+      <div>
+        <h1>ALINDA PREPARATORY SCHOOL - KANARA</h1>
+        <small>Education for a Bright Future</small>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <a href="index.html" class="btn btn-yellow">Home</a>
+      <span class="nav-pill">Bursar Finance Portal</span>
+      <button class="btn btn-outline" id="logoutBtn">Sign Out</button>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- SYSTEM MONEY BALANCE & SUMMARY -->
+    <div class="grid-3">
+      <div class="card gold-top">
+        <small style="color:#b45309; font-weight:800;">SYSTEM SCHOOL MONEY BALANCE</small>
+        <h2 id="systemMoneyBalance" style="margin:8px 0; color:var(--green-dark);">UGX 0</h2>
+        <p style="font-size:0.88rem; color:var(--text-muted);">Synchronized automatically with confirmed payments</p>
+      </div>
+      <div class="card">
+        <small style="color:var(--green-primary); font-weight:800;">PENDING PARENT ALERTS</small>
+        <h2 id="pendingAlertsCount" style="margin:8px 0;">0</h2>
+        <p style="font-size:0.88rem; color:var(--text-muted);">Awaiting Bursar verification</p>
+      </div>
+      <div class="card">
+        <small style="color:var(--green-primary); font-weight:800;">TOTAL OUTSTANDING FEES</small>
+        <h2 id="totalOutstandingFees" style="margin:8px 0; color:#b91c1c;">UGX 0</h2>
+        <p style="font-size:0.88rem; color:var(--text-muted);">Across all registered pupils</p>
+      </div>
+    </div>
+
+    <!-- INCOMING PARENT PAYMENT NOTIFICATIONS -->
+    <section>
+      <h3 class="section-title">Incoming Parent Payment Notifications (Confirm & Notify Directors)</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Pupil Name</th>
+              <th>Class</th>
+              <th>Category</th>
+              <th>Amount (UGX)</th>
+              <th>Ref / Slip</th>
+              <th>Payer</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="incomingPaymentsBody">
+            <tr><td colspan="8">Listening for parent payment alerts...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- EVERY PUPIL'S FEE BALANCE, FOOD PAYMENT (CASH / BROUGHT FOOD) & UNIFORM -->
+    <section>
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
+        <h3 class="section-title" style="margin-bottom:0;">All Pupils: Fees Balance, Food Payment & Uniform Status</h3>
+        <button class="btn btn-green" id="openAddPupilFinanceBtn">+ Add / Update Pupil Ledger</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Adm No.</th>
+              <th>Pupil Name</th>
+              <th>Class</th>
+              <th>Tuition Fee Balance (UGX)</th>
+              <th>Food Payment (Cash / Brought Food)</th>
+              <th>Uniform Payment</th>
+              <th>Quick Edit</th>
+            </tr>
+          </thead>
+          <tbody id="pupilLedgerBody">
+            <tr><td colspan="7">Loading pupil financial ledger...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ADD / UPDATE PUPIL FINANCE MODAL -->
+  <div class="modal" id="pupilFinanceModal">
+    <div class="modal-box">
+      <h3 style="color:var(--green-dark); margin-bottom:10px;">Update Pupil Financial Record</h3>
+      <form id="pupilFinanceForm">
+        <input type="hidden" id="editPupilDocId" />
+        <label>Admission Number</label>
+        <input type="text" id="finAdmNo" required placeholder="e.g., APS-2026-01" />
+        <label>Pupil Full Name</label>
+        <input type="text" id="finFullName" required />
+        <label>Class Level</label>
+        <select id="finClass" required>
+          <option value="Nursery">Nursery</option>
+          <option value="P.1">P.1</option>
+          <option value="P.2">P.2</option>
+          <option value="P.3">P.3</option>
+          <option value="P.4">P.4</option>
+          <option value="P.5">P.5</option>
+          <option value="P.6">P.6</option>
+          <option value="P.7">P.7</option>
+        </select>
+        <label>Tuition Fee Balance Remaining (UGX)</label>
+        <input type="number" id="finFeeBalance" required min="0" />
+        <label>Food Payment Option</label>
+        <select id="finFoodStatus" required>
+          <option value="Cash Paid">Cash Paid (School Meals)</option>
+          <option value="Cash Pending">Cash Pending (School Meals)</option>
+          <option value="Brought Food">Brought Food from Home</option>
+        </select>
+        <label>Uniform Payment Status</label>
+        <select id="finUniformStatus" required>
+          <option value="Paid in Full">Paid in Full</option>
+          <option value="Partial Payment">Partial Payment</option>
+          <option value="Unpaid">Unpaid</option>
+        </select>
+        <div style="display:flex; gap:10px; justify-content:flex-end;">
+          <button type="button" class="btn" id="closeFinanceModal">Cancel</button>
+          <button type="submit" class="btn btn-yellow">Save Ledger</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Alinda Preparatory School - Kanara • Education for a Bright Future</p>
+  </footer>
+
+  <script type="module">
+    import { auth, db } from "./firebase-config.js";
+    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
+    import { doc, getDoc, setDoc, updateDoc, addDoc, collection, onSnapshot, increment, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) { window.location.href = "index.html"; return; }
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      if (!userDoc.exists() || !["bursar", "director"].includes(userDoc.data().role)) {
+        window.location.href = "index.html";
+        return;
+      }
+      startBursarListeners();
+    });
+
+    function startBursarListeners() {
+      // 1. Live System Money Balance Listener
+      onSnapshot(doc(db, "finance_summary", "school_account"), (snap) => {
+        const bal = snap.exists() ? (snap.data().totalBalance || 0) : 0;
+        document.getElementById("systemMoneyBalance").textContent = `UGX ${Number(bal).toLocaleString()}`;
+      });
+
+      // 2. Live Incoming Payment Notifications Listener
+      onSnapshot(collection(db, "payment_notifications"), (snap) => {
+        const tbody = document.getElementById("incomingPaymentsBody");
+        tbody.innerHTML = "";
+        let pendingCount = 0;
+
+        if (snap.empty) {
+          tbody.innerHTML = `<tr><td colspan="8">No parent payment notifications received yet.</td></tr>`;
+        } else {
+          snap.forEach(d => {
+            const p = d.data();
+            const isPending = p.status === "Pending Bursar Confirmation";
+            if (isPending) pendingCount++;
+
+            tbody.innerHTML += `<tr>
+              <td><strong>${p.pupilName}</strong></td>
+              <td>${p.classLevel}</td>
+              <td>${p.category}</td>
+              <td><strong>UGX ${Number(p.amount).toLocaleString()}</strong></td>
+              <td>${p.reference}</td>
+              <td>${p.payerName}</td>
+              <td><strong>${p.status}</strong></td>
+              <td>
+                ${isPending
+                  ? `<button class="btn btn-green" style="padding:6px 12px; font-size:0.82rem;" onclick="confirmPayment('${d.id}', '${p.pupilId}', '${p.pupilName}', '${p.category}', ${p.amount}, '${p.reference}')">Confirm & Notify Directors</button>`
+                  : `<span style="color:var(--green-primary); font-weight:700;">Confirmed & Directors Notified</span>`
+                }
+              </td>
+            </tr>`;
+          });
+        }
+        document.getElementById("pendingAlertsCount").textContent = pendingCount;
+      });
+
+      // 3. Live Pupil Fee, Food & Uniform Ledger Listener
+      onSnapshot(collection(db, "pupils"), (snap) => {
+        const tbody = document.getElementById("pupilLedgerBody");
+        tbody.innerHTML = "";
+        let totalOwed = 0;
+
+        if (snap.empty) {
+          tbody.innerHTML = `<tr><td colspan="7">No pupil financial records added yet. Click "+ Add / Update Pupil Ledger".</td></tr>`;
+        } else {
+          snap.forEach(d => {
+            const u = d.data();
+            totalOwed += Number(u.feeBalance || 0);
+            tbody.innerHTML += `<tr>
+              <td><strong>${u.admissionNo}</strong></td>
+              <td>${u.fullName}</td>
+              <td>${u.classLevel}</td>
+              <td style="color:${u.feeBalance > 0 ? '#b91c1c' : '#15803d'}; font-weight:700;">UGX ${Number(u.feeBalance || 0).toLocaleString()}</td>
+              <td><strong>${u.foodStatus || "Cash Pending"}</strong></td>
+              <td>${u.uniformStatus || "Unpaid"}</td>
+              <td><button class="btn btn-yellow" style="padding:5px 10px; font-size:0.8rem;" onclick="openEditPupil('${d.id}', '${u.admissionNo}', '${u.fullName}', '${u.classLevel}', ${u.feeBalance || 0}, '${u.foodStatus || "Cash Pending"}', '${u.uniformStatus || "Unpaid"}')">Edit</button></td>
+            </tr>`;
+          });
+        }
+        document.getElementById("totalOutstandingFees").textContent = `UGX ${totalOwed.toLocaleString()}`;
+      });
+    }
+
+    // Confirm Payment -> Sync System Balance -> Update Pupil Balance -> Notify Board of Directors
+    async function confirmPayment(docId, pupilId, pupilName, category, amount, reference) {
+      if (!confirm(`Confirm payment of UGX ${Number(amount).toLocaleString()} for ${pupilName} (${category})? This action cannot be undone.`)) return;
+
+      try {
+        // 1. Update Payment Notification Status
+        await updateDoc(doc(db, "payment_notifications", docId), {
+          status: "Confirmed by Bursar",
+          confirmedAt: serverTimestamp()
+        });
+
+        // 2. Update System Money Balance
+        const financeSummaryRef = doc(db, "finance_summary", "school_account");
+        await updateDoc(financeSummaryRef, {
+          totalBalance: increment(Number(amount))
+        });
+
+        // 3. Update Pupil's Fee Balance
+        const pupilRef = doc(db, "pupils", pupilId);
+        const pupilSnap = await getDoc(pupilRef);
+        if (pupilSnap.exists()) {
+          const currentBalance = Number(pupilSnap.data().feeBalance || 0);
+          const newBalance = Math.max(0, currentBalance - Number(amount));
+          await updateDoc(pupilRef, { feeBalance: newBalance });
+        }
+
+        alert(`Payment confirmed and directors notified for ${pupilName}.`);
+      } catch (error) {
+        console.error("Error confirming payment:", error);
+        alert("An error occurred while confirming the payment. Please try again.");
+      }
+    }   
+
+    // Keep these handlers available to the existing table buttons.
+    window.confirmPayment = confirmPayment;
+    window.openEditPupil = (id, admNo, fullName, classLevel, feeBalance, foodStatus, uniformStatus) => {
+      document.getElementById("editPupilDocId").value = id;
+      document.getElementById("finAdmNo").value = admNo;
+      document.getElementById("finFullName").value = fullName;
+      document.getElementById("finClass").value = classLevel;
+      document.getElementById("finFeeBalance").value = feeBalance;
+      document.getElementById("finFoodStatus").value = foodStatus;
+      document.getElementById("finUniformStatus").value = uniformStatus;
+      document.getElementById("pupilFinanceModal").classList.add("open");
+    };
+
+    document.getElementById("openAddPupilFinanceBtn").addEventListener("click", () => {
+      document.getElementById("pupilFinanceForm").reset();
+      document.getElementById("editPupilDocId").value = "";
+      document.getElementById("pupilFinanceModal").classList.add("open");
+    });
+    document.getElementById("closeFinanceModal").addEventListener("click", () => {
+      document.getElementById("pupilFinanceModal").classList.remove("open");
+    });
+    document.getElementById("pupilFinanceForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const id = document.getElementById("editPupilDocId").value;
+      const record = {
+        admissionNo: document.getElementById("finAdmNo").value.trim(),
+        fullName: document.getElementById("finFullName").value.trim(),
+        classLevel: document.getElementById("finClass").value,
+        feeBalance: Number(document.getElementById("finFeeBalance").value),
+        foodStatus: document.getElementById("finFoodStatus").value,
+        uniformStatus: document.getElementById("finUniformStatus").value,
+        updatedAt: serverTimestamp()
+      };
+      try {
+        if (id) {
+          await updateDoc(doc(db, "pupils", id), record);
+        } else {
+          await addDoc(collection(db, "pupils"), { ...record, createdAt: serverTimestamp() });
+        }
+        document.getElementById("pupilFinanceModal").classList.remove("open");
+        document.getElementById("pupilFinanceForm").reset();
+      } catch (error) {
+        console.error("Unable to save pupil ledger:", error);
+        alert("Could not save the pupil record. Check your access permissions and try again.");
+      }
+    });
+
+    document.getElementById("logoutBtn").addEventListener("click", async () => {
+      await signOut(auth);
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>
+
+
+==========================================================================================
+FILE: directors.html
+==========================================================================================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Board of Directors Oversight | Alinda Preparatory School - Kanara</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="brand">
+      <div class="brand-badge">APS</div>
+      <div>
+        <h1>ALINDA PREPARATORY SCHOOL - KANARA</h1>
+        <small>Education for a Bright Future</small>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <a href="index.html" class="btn btn-yellow">Home</a>
+      <span class="nav-pill">Board of Directors Oversight</span>
+      <button class="btn btn-outline" id="logoutBtn">Sign Out</button>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- EXECUTIVE KPI OVERVIEW -->
+    <div class="grid-3">
+      <div class="card gold-top">
+        <small style="color:#b45309; font-weight:800;">CONFIRMED SCHOOL TREASURY</small>
+        <h2 id="dirSystemBalance" style="margin:8px 0; color:var(--green-dark);">UGX 0</h2>
+        <p style="font-size:0.86rem; color:var(--text-muted);">Live balance synchronized by Bursar</p>
+      </div>
+      <div class="card">
+        <small style="color:var(--green-primary); font-weight:800;">ENROLLED PUPILS IN LEDGER</small>
+        <h2 id="dirPupilCount" style="margin:8px 0;">0</h2>
+        <p style="font-size:0.86rem; color:var(--text-muted);">Active pupils tracked across classes</p>
+      </div>
+      <div class="card">
+        <small style="color:var(--green-primary); font-weight:800;">ACTIVE CLASSES WITH TEACHERS</small>
+        <h2 id="dirActiveClasses" style="margin:8px 0;">0</h2>
+        <p style="font-size:0.86rem; color:var(--text-muted);">Live classroom attendance reported to DOS</p>
+      </div>
+    </div>
+
+    <!-- DIRECT DEPARTMENT PAGE OVERSIGHT SWITCHER -->
+    <section class="card gold-top" style="margin-bottom:30px;">
+      <h3 class="section-title">Inspect Any Department Page Live</h3>
+      <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:14px;">
+        As a member of the Board of Directors, you have full oversight access to inspect every operational page in real time:
+      </p>
+      <div style="display:flex; gap:12px; flex-wrap:wrap;">
+        <a href="bursar.html" class="btn btn-green">Inspect Bursar & Finance Page</a>
+        <a href="dos.html" class="btn btn-yellow">Inspect DOS Academics & Marks</a>
+        <a href="headteacher.html" class="btn btn-green">Inspect Head Teacher & Public Notices</a>
+        <a href="staff.html" class="btn btn-yellow">Inspect Staff Room Portal</a>
+        <a href="gallery.html" class="btn btn-green">Inspect School Activities Gallery</a>
+      </div>
+    </section>
+
+    <!-- LIVE BURSAR & SYSTEM NOTIFICATIONS TO DIRECTORS -->
+    <section>
+      <h3 class="section-title">Live Bursar Payment Confirmations & System Alerts</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Source Department</th>
+              <th>Alert Title</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody id="directorAlertsBody">
+            <tr><td colspan="3">Listening for live Bursar & department notifications...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- LIVE SCHOOL-WIDE ACTIVITY STREAM (ADMISSIONS, STAFF REQUESTS, LESSON PLANS) -->
+    <div class="grid-3" style="grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));">
+      <section class="card">
+        <h3 class="section-title">Recent Pupil Admissions</h3>
+        <div id="dirAdmissionsList" style="line-height:1.8; font-size:0.94rem;">Loading...</div>
+      </section>
+
+      <section class="card gold-top">
+        <h3 class="section-title">Staff Welfare & Internal Requests</h3>
+        <div id="dirStaffReqList" style="line-height:1.8; font-size:0.94rem;">Loading...</div>
+      </section>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Alinda Preparatory School - Kanara • Education for a Bright Future</p>
+  </footer>
+
+  <script type="module">
+    import { auth, db } from "./firebase-config.js";
+    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
+    import { doc, getDoc, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) { window.location.href = "index.html"; return; }
+      const uDoc = await getDoc(doc(db, "users", user.uid));
+      if (!uDoc.exists() || uDoc.data().role !== "director") {
+        window.location.href = "index.html";
+        return;
+      }
+      startDirectorOversight();
+    });
+
+    function startDirectorOversight() {
+      // 1. Treasury Balance
+      onSnapshot(doc(db, "finance_summary", "school_account"), (snap) => {
+        const bal = snap.exists() ? (snap.data().totalBalance || 0) : 0;
+        document.getElementById("dirSystemBalance").textContent = `UGX ${Number(bal).toLocaleString()}`;
+      });
+
+      // 2. Pupil Count
+      onSnapshot(collection(db, "pupils"), (snap) => {
+        document.getElementById("dirPupilCount").textContent = snap.size;
+      });
+
+      // 3. Teachers in Class
+      onSnapshot(collection(db, "teacher_presence"), (snap) => {
+        document.getElementById("dirActiveClasses").textContent = snap.size;
+      });
+
+      // 4. Live Bursar Confirmations & Alerts
+      onSnapshot(collection(db, "director_notifications"), (snap) => {
+        const tbody = document.getElementById("directorAlertsBody");
+        tbody.innerHTML = snap.empty
+          ? `<tr><td colspan="3">No Bursar confirmations or alerts recorded yet.</td></tr>`
+          : "";
+        snap.forEach(d => {
+          const n = d.data();
+          tbody.innerHTML += `<tr>
+            <td><strong style="color:var(--green-primary);">${n.source}</strong></td>
+            <td><strong>${n.title}</strong></td>
+            <td>${n.message}</td>
+          </tr>`;
+        });
+      });
+
+      // 5. Admissions Feed
+      onSnapshot(collection(db, "admissions"), (snap) => {
+        const box = document.getElementById("dirAdmissionsList");
+        box.innerHTML = snap.empty ? "No admissions submitted yet." : "";
+        snap.forEach(d => {
+          const a = d.data();
+          box.innerHTML += `<p>• <strong>${a.childName}</strong> (${a.childClass}) — <em>${a.status}</em></p>`;
+        });
+      });
+
+      // 6. Staff Requests Feed
+      onSnapshot(collection(db, "staff_requests"), (snap) => {
+        const box = document.getElementById("dirStaffReqList");
+        box.innerHTML = snap.empty ? "No internal staff requests." : "";
+        snap.forEach(d => {
+          const r = d.data();
+          box.innerHTML += `<p>• <strong>${r.teacherName}</strong> [${r.type}]: ${r.details} — <em>${r.status}</em></p>`;
+        });
+      });
+    }
+
+    document.getElementById("logoutBtn").onclick = async () => {
+      await signOut(auth);
+      window.location.href = "index.html";
+    };
+  </script>
+</body>
+</html>
+
+
+==========================================================================================
+FILE: headteacher.html
+==========================================================================================
+
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Head Teacher | Alinda Preparatory School</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<header class="navbar"><div class="brand"><div class="brand-badge">APS</div><div><h1>ALINDA PREPARATORY SCHOOL – KANARA</h1><small>Head Teacher Administration</small></div></div><nav class="nav-actions"><a class="btn btn-yellow" href="index.html">Home</a><a class="btn btn-outline" href="directors.html">Directors</a><button class="btn btn-outline" id="logoutBtn">Sign Out</button></nav></header>
+<main class="container">
+<section class="card gold-top"><p class="eyebrow">Administration</p><h2>Head Teacher Dashboard</h2><p id="welcomeText">Loading account…</p></section>
+<div class="grid-3"><section class="card"><h3>Publish a School Notice</h3><form id="noticeForm"><label for="noticeTitle">Notice title</label><input id="noticeTitle" required maxlength="100"><label for="noticeBody">Message</label><textarea id="noticeBody" required maxlength="3000"></textarea><button class="btn btn-green" type="submit">Publish Notice</button></form><p id="noticeMsg" role="status"></p></section>
+<section class="card"><h3>Admissions Overview</h3><p id="admissionCount">Loading…</p><div id="admissionsList">Loading applications…</div></section>
+<section class="card"><h3>Staff Requests</h3><div id="staffRequestsList">Loading requests…</div></section></div>
+<section class="card"><h3>Recent School Notices</h3><div id="noticesList">Loading notices…</div></section>
+</main><footer><p>&copy; 2026 Alinda Preparatory School - Kanara • Education for a Bright Future</p></footer>
+<script type="module">
+import {auth,db} from './firebase-config.js';
+import {onAuthStateChanged,signOut} from 'https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js';
+import {doc,getDoc,collection,addDoc,onSnapshot,query,orderBy,limit,serverTimestamp,updateDoc} from 'https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js';
+const $=id=>document.getElementById(id); let currentUser=null;
+function showError(el,msg){$(el).textContent=msg;}
+onAuthStateChanged(auth,async user=>{if(!user){location.replace('index.html');return;}try{const s=await getDoc(doc(db,'users',user.uid));if(!s.exists()||!['headteacher','director'].includes(s.data().role)){alert('This account is not authorised for the Head Teacher page.');location.replace('index.html');return;}currentUser=s.data();$('welcomeText').textContent=`Signed in as ${currentUser.fullName||user.email}`;loadLists();}catch(e){console.error(e);$('welcomeText').textContent='Could not verify your school role. Check your connection and Firestore permissions.';}});
+function loadLists(){
+ onSnapshot(query(collection(db,'admissions'),orderBy('submittedAt','desc'),limit(30)),snap=>{$('admissionCount').textContent=`${snap.size} recent application(s)`;$('admissionsList').replaceChildren();if(snap.empty){$('admissionsList').textContent='No applications yet.';return;}snap.forEach(d=>{const x=d.data(),box=document.createElement('article');box.className='card';const h=document.createElement('strong');h.textContent=x.childName||'Applicant';const detail=document.createElement('p');detail.textContent=`${x.childClass||'Class not stated'} • ${x.parentName||'Parent not stated'} • ${x.parentPhone||''} • ${x.status||'Pending'}`;box.append(h,detail);$('admissionsList').append(box);});},e=>{$('admissionsList').textContent='Unable to load applications. Check Firestore rules.';console.error(e);});
+ onSnapshot(query(collection(db,'staff_requests'),orderBy('createdAt','desc'),limit(20)),snap=>{$('staffRequestsList').replaceChildren();if(snap.empty){$('staffRequestsList').textContent='No staff requests.';return;}snap.forEach(d=>{const x=d.data(),box=document.createElement('article');box.className='card';const h=document.createElement('strong');h.textContent=`${x.teacherName||'Staff'} — ${x.type||'Request'}`;const t=document.createElement('p');t.textContent=`${x.details||''} | Status: ${x.status||'Pending'}`;box.append(h,t);$('staffRequestsList').append(box);});},e=>{$('staffRequestsList').textContent='Unable to load staff requests.';console.error(e);});
+ onSnapshot(query(collection(db,'school_notices'),orderBy('createdAt','desc'),limit(10)),snap=>{$('noticesList').replaceChildren();if(snap.empty){$('noticesList').textContent='No notices published.';return;}snap.forEach(d=>{const x=d.data(),box=document.createElement('article');box.className='card';const h=document.createElement('h4');h.textContent=x.title||'School notice';const t=document.createElement('p');t.textContent=x.body||'';box.append(h,t);$('noticesList').append(box);});},e=>{$('noticesList').textContent='Unable to load notices.';console.error(e);});
+}
+$('noticeForm').addEventListener('submit',async e=>{e.preventDefault();const b=e.currentTarget.querySelector('button');b.disabled=true;showError('noticeMsg','Publishing…');try{await addDoc(collection(db,'school_notices'),{title:$('noticeTitle').value.trim(),body:$('noticeBody').value.trim(),postedBy:currentUser?.fullName||auth.currentUser?.email||'Head Teacher',createdAt:serverTimestamp(),published:true});e.currentTarget.reset();showError('noticeMsg','Notice published successfully.');}catch(err){console.error(err);showError('noticeMsg','Could not publish. Check your internet connection and Firestore rules.');}finally{b.disabled=false;}});
+$('logoutBtn').addEventListener('click',async()=>{try{await signOut(auth);location.replace('index.html');}catch(e){alert('Sign out failed. Please try again.');}});
+</script></body></html>
+
+==========================================================================================
+FILE: gallery.html
+==========================================================================================
+
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>School Gallery | Alinda Preparatory School</title><link rel="stylesheet" href="style.css"><style>.gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}.gallery-item{overflow:hidden;padding:0}.gallery-item img{width:100%;height:190px;object-fit:cover;display:block;background:#edf5ef}.gallery-item .caption{padding:14px}.gallery-item h3{margin:0 0 5px}.gallery-item p{margin:0;color:var(--muted)}</style></head>
+<body><header class="navbar"><div class="brand"><div class="brand-badge">APS</div><div><h1>ALINDA PREPARATORY SCHOOL – KANARA</h1><small>School Activities & Gallery</small></div></div><nav class="nav-actions"><a class="btn btn-yellow" href="index.html">Home</a><button class="btn btn-green" id="adminToggle" hidden>Add Photo</button></nav></header>
+<main class="container"><section class="card gold-top"><p class="eyebrow">Our school life</p><h2>School Activities Gallery</h2><p>Explore learning, sports, celebrations and other school activities.</p></section>
+<section class="card" id="addPhotoPanel" hidden><h3>Add a gallery photo (staff only)</h3><form id="photoForm"><label for="photoTitle">Photo title</label><input id="photoTitle" required maxlength="100"><label for="photoDescription">Description</label><textarea id="photoDescription" maxlength="500"></textarea><label for="photoUrl">Image URL</label><input id="photoUrl" type="url" required placeholder="https://…"><button class="btn btn-green">Publish Photo</button></form><p id="photoMsg" role="status"></p><small>Use an image URL hosted by a service approved by the school. Do not upload identifiable pupil photos without school/parent permission.</small></section>
+<section id="galleryGrid" class="gallery-grid"><article class="card">Loading gallery…</article></section></main><footer><p>&copy; 2026 Alinda Preparatory School - Kanara • Education for a Bright Future</p></footer>
+<script type="module">
+import {auth,db} from './firebase-config.js';import {onAuthStateChanged} from 'https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js';import {collection,addDoc,onSnapshot,query,orderBy,serverTimestamp,limit,getDoc,doc} from 'https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js';
+const $=id=>document.getElementById(id);let canManage=false;
+onAuthStateChanged(auth,async user=>{if(!user)return;try{const u=await getDoc(doc(db,'users',user.uid));canManage=u.exists()&&['headteacher','director','staff'].includes(u.data().role);if(canManage){$('adminToggle').hidden=false;}}catch(e){console.error(e);}});
+$('adminToggle').addEventListener('click',()=>$('addPhotoPanel').hidden=!$('addPhotoPanel').hidden);
+onSnapshotGallery();function onSnapshotGallery(){onSnapshot(query(collection(db,'school_gallery'),orderBy('createdAt','desc'),limit(100)),snap=>{const grid=$('galleryGrid');grid.replaceChildren();if(snap.empty){const p=document.createElement('p');p.className='card';p.textContent='Photos and activity highlights will appear here when the school publishes them.';grid.append(p);return;}snap.forEach(d=>{const x=d.data();if(x.published===false)return;const card=document.createElement('article');card.className='card gallery-item';const img=document.createElement('img');img.src=x.imageUrl||'';img.alt=x.title||'School activity';img.loading='lazy';img.referrerPolicy='no-referrer';img.addEventListener('error',()=>{img.alt='Image unavailable';img.style.display='none';});const cap=document.createElement('div');cap.className='caption';const h=document.createElement('h3');h.textContent=x.title||'School activity';const desc=document.createElement('p');desc.textContent=x.description||'';cap.append(h,desc);card.append(img,cap);grid.append(card);});if(!grid.children.length)grid.textContent='No published photos yet.';},e=>{$('galleryGrid').textContent='Gallery could not load. Check your internet connection and Firestore read permissions.';console.error(e);});}
+$('photoForm').addEventListener('submit',async e=>{e.preventDefault();if(!canManage){$('photoMsg').textContent='You are not authorised to publish photos.';return;}const b=e.currentTarget.querySelector('button');b.disabled=true;$('photoMsg').textContent='Publishing…';try{const url=new URL($('photoUrl').value);if(!['https:'].includes(url.protocol))throw new Error('HTTPS image URL required');await addDoc(collection(db,'school_gallery'),{title:$('photoTitle').value.trim(),description:$('photoDescription').value.trim(),imageUrl:url.href,published:true,createdAt:serverTimestamp(),postedBy:auth.currentUser.uid});e.currentTarget.reset();$('photoMsg').textContent='Photo published.';}catch(err){console.error(err);$('photoMsg').textContent='Could not publish photo. Use a valid HTTPS image URL and check Firestore rules.';}finally{b.disabled=false;}});
+</script></body></html>
+
+==========================================================================================
+FILE: pupil.html
+==========================================================================================
+
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Pupil Portal | Alinda Preparatory School</title><link rel="stylesheet" href="style.css"></head>
+<body><header class="navbar"><div class="brand"><div class="brand-badge">APS</div><div><h1>ALINDA PREPARATORY SCHOOL – KANARA</h1><small>Pupil & Parent Portal</small></div></div><nav class="nav-actions"><a class="btn btn-yellow" href="index.html">Home</a><button class="btn btn-outline" id="logoutBtn">Sign Out</button></nav></header>
+<main class="container"><section class="card gold-top"><p class="eyebrow">Pupil portal</p><h2 id="pupilName">Loading pupil account…</h2><p id="pupilMeta">Please wait while we load your school record.</p></section>
+<div class="grid-3"><section class="card"><h3>Fee Balance</h3><h2 id="feeBalance">—</h2><p id="feeStatus">Finance record</p></section><section class="card"><h3>Food Status</h3><p id="foodStatus">—</p></section><section class="card"><h3>Uniform Status</h3><p id="uniformStatus">—</p></section></div>
+<section class="card"><h3>Academic Results</h3><div class="table-wrap"><table><thead><tr><th>Term</th><th>Subject</th><th>Score</th><th>Grade</th></tr></thead><tbody id="marksBody"><tr><td colspan="4">Loading marks…</td></tr></tbody></table></div></section>
+<section class="card"><h3>School Notices</h3><div id="pupilNotices">Loading notices…</div></section></main><footer><p>&copy; 2026 Alinda Preparatory School - Kanara • Education for a Bright Future</p></footer>
+<script type="module">
+import {auth,db} from './firebase-config.js';import {onAuthStateChanged,signOut} from 'https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js';import {doc,getDoc,collection,getDocs,query,where,orderBy,limit,onSnapshot} from 'https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js';
+const $=id=>document.getElementById(id);const money=n=>`UGX ${Number(n||0).toLocaleString('en-UG')}`;
+onAuthStateChanged(auth,async user=>{if(!user){location.replace('index.html');return;}try{const us=await getDoc(doc(db,'users',user.uid));if(!us.exists()||us.data().role!=='pupil'){alert('This account is not registered as a pupil.');location.replace('index.html');return;}const profile=us.data();const admissionNo=profile.admissionNo||profile.pupilId;if(!admissionNo){$('pupilName').textContent=profile.fullName||'Pupil account';$('pupilMeta').textContent='Your account is missing its admission number. Please contact the school office.';return;}$('pupilName').textContent=profile.fullName||'Pupil Portal';$('pupilMeta').textContent=`Admission No: ${admissionNo}${profile.classLevel?' • Class: '+profile.classLevel:''}`;
+const pupils=await getDocs(query(collection(db,'pupils'),where('admissionNo','==',admissionNo),limit(1)));if(!pupils.empty){const pupil=pupils.docs[0].data();$('feeBalance').textContent=money(pupil.feeBalance);$('feeStatus').textContent='Outstanding fee balance';$('foodStatus').textContent=pupil.foodStatus||'Not updated';$('uniformStatus').textContent=pupil.uniformStatus||'Not updated';}else{$('feeBalance').textContent='Not available';$('feeStatus').textContent='Contact the bursar to link your finance record.';}
+const marks=await getDocs(query(collection(db,'pupil_marks'),where('pupilId','==',admissionNo)));const body=$('marksBody');body.replaceChildren();if(marks.empty){body.innerHTML='<tr><td colspan="4">No results have been published for this pupil yet.</td></tr>';}else{marks.forEach(d=>{const x=d.data(),tr=document.createElement('tr');[x.term||'—',x.subject||'—',x.score??'—',x.grade||'—'].forEach(v=>{const td=document.createElement('td');td.textContent=String(v);tr.append(td);});body.append(tr);});}
+onSnapshot(query(collection(db,'school_notices'),orderBy('createdAt','desc'),limit(10)),snap=>{const box=$('pupilNotices');box.replaceChildren();if(snap.empty){box.textContent='No current notices.';return;}snap.forEach(d=>{const x=d.data(),article=document.createElement('article');article.className='card';const h=document.createElement('h4');h.textContent=x.title||'School notice';const p=document.createElement('p');p.textContent=x.body||'';article.append(h,p);box.append(article);});},e=>{$('pupilNotices').textContent='Notices are temporarily unavailable.';console.error(e);});
+}catch(e){console.error(e);$('pupilMeta').textContent='Could not load your school information. Check your connection or contact the administrator.';}});
+$('logoutBtn').addEventListener('click',async()=>{try{await signOut(auth);location.replace('index.html');}catch(e){alert('Sign out failed. Please try again.');}});
+</script></body></html>

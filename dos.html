@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Director of Studies (DOS) | Alinda Preparatory School - Kanara</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="brand">
+      <div class="brand-badge">APS</div>
+      <div>
+        <h1>ALINDA PREPARATORY SCHOOL - KANARA</h1>
+        <small>Education for a Bright Future</small>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <a href="index.html" class="btn btn-yellow">Home</a>
+      <a href="school-profile.html" class="btn btn-outline">About School</a>
+      <a href="gallery.html" class="btn btn-outline">Gallery</a>
+      <span class="nav-pill">Director of Studies (DOS) Portal</span>
+      <button class="btn btn-outline" id="logoutBtn">Sign Out</button>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- 1. TEACHERS PRESENT IN EVERY CLASS -->
+    <section>
+      <h3 class="section-title">Live Teachers Present in Every Class</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Class</th>
+              <th>Teacher Assigned / Checked In</th>
+              <th>Subject / Lesson</th>
+              <th>Presence Status</th>
+            </tr>
+          </thead>
+          <tbody id="dosPresenceBody">
+            <tr><td colspan="4">Loading live classroom attendance...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 2. CLASS TIMETABLES (MANAGE & VIEW) -->
+    <section>
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
+        <h3 class="section-title" style="margin-bottom:0;">Master Class Timetables</h3>
+        <button class="btn btn-green" id="openTimetableModalBtn">+ Add Timetable Slot</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Class</th>
+              <th>Day</th>
+              <th>Time Slot</th>
+              <th>Subject</th>
+              <th>Teacher</th>
+            </tr>
+          </thead>
+          <tbody id="dosTimetableBody">
+            <tr><td colspan="5">Loading class timetables...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 3. TEACHERS' LESSON PLANS -->
+    <section>
+      <h3 class="section-title">Teachers' Submitted Lesson Plans</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Teacher</th>
+              <th>Class & Subject</th>
+              <th>Topic</th>
+              <th>Objectives / Notes</th>
+              <th>Status</th>
+              <th>DOS Action</th>
+            </tr>
+          </thead>
+          <tbody id="dosLessonPlansBody">
+            <tr><td colspan="6">Loading lesson plans...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 4. EVERY STUDENT'S MARKS (RECORD & VIEW ALL) -->
+    <section>
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
+        <h3 class="section-title" style="margin-bottom:0;">All Pupils' Academic Marks</h3>
+        <button class="btn btn-yellow" id="openMarksModalBtn">+ Record Pupil Marks</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Pupil ID / Adm No</th>
+              <th>Pupil Name</th>
+              <th>Class</th>
+              <th>Subject</th>
+              <th>Score (%)</th>
+              <th>Grade</th>
+            </tr>
+          </thead>
+          <tbody id="dosAllMarksBody">
+            <tr><td colspan="6">Loading pupils' marks...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ADD TIMETABLE SLOT MODAL -->
+  <div class="modal" id="timetableModal">
+    <div class="modal-box">
+      <h3 style="color:var(--green-dark); margin-bottom:10px;">Add Class Timetable Entry</h3>
+      <form id="timetableForm">
+        <label>Class</label>
+        <select id="ttClass" required>
+          <option value="Nursery">Nursery</option>
+          <option value="P.1">P.1</option>
+          <option value="P.2">P.2</option>
+          <option value="P.3">P.3</option>
+          <option value="P.4">P.4</option>
+          <option value="P.5">P.5</option>
+          <option value="P.6">P.6</option>
+          <option value="P.7">P.7</option>
+        </select>
+        <label>Day of Week</label>
+        <select id="ttDay" required>
+          <option value="Monday">Monday</option>
+          <option value="Tuesday">Tuesday</option>
+          <option value="Wednesday">Wednesday</option>
+          <option value="Thursday">Thursday</option>
+          <option value="Friday">Friday</option>
+        </select>
+        <label>Time Slot</label>
+        <input type="text" id="ttTime" required placeholder="e.g., 8:30 AM - 9:30 AM" />
+        <label>Subject</label>
+        <input type="text" id="ttSubject" required />
+        <label>Teacher Name</label>
+        <input type="text" id="ttTeacher" required />
+        <div style="display:flex; gap:10px; justify-content:flex-end;">
+          <button type="button" class="btn" id="closeTimetableModal">Cancel</button>
+          <button type="submit" class="btn btn-green">Save Timetable</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- RECORD PUPIL MARKS MODAL -->
+  <div class="modal" id="marksModal">
+    <div class="modal-box">
+      <h3 style="color:var(--green-dark); margin-bottom:10px;">Record Pupil Assessment Mark</h3>
+      <form id="marksForm">
+        <label>Pupil Admission No (must match Pupil ID)</label>
+        <input type="text" id="mkPupilId" required placeholder="e.g., APS-2026-01" />
+        <label>Pupil Full Name</label>
+        <input type="text" id="mkPupilName" required />
+        <label>Class</label>
+        <select id="mkClass" required>
+          <option value="Nursery">Nursery</option>
+          <option value="P.1">P.1</option>
+          <option value="P.2">P.2</option>
+          <option value="P.3">P.3</option>
+          <option value="P.4">P.4</option>
+          <option value="P.5">P.5</option>
+          <option value="P.6">P.6</option>
+          <option value="P.7">P.7</option>
+        </select>
+        <label>Subject</label>
+        <select id="mkSubject" required>
+          <option value="Mathematics">Mathematics</option>
+          <option value="English Language">English Language</option>
+          <option value="Integrated Science">Integrated Science</option>
+          <option value="Social Studies (SST)">Social Studies (SST)</option>
+          <option value="Literacy / Reading">Literacy / Reading</option>
+        </select>
+        <label>Score (%)</label>
+        <input type="number" id="mkScore" required min="0" max="100" />
+        <label>Grade (e.g., D1, D2, C3)</label>
+        <input type="text" id="mkGrade" required placeholder="D1" />
+        <div style="display:flex; gap:10px; justify-content:flex-end;">
+          <button type="button" class="btn" id="closeMarksModal">Cancel</button>
+          <button type="submit" class="btn btn-yellow">Publish Mark</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Alinda Preparatory School - Kanara • Education for a Bright Future</p>
+  </footer>
+
+  <script type="module">
+    import { auth, db } from "./firebase-config.js";
+    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
+    import { doc, getDoc, updateDoc, addDoc, collection, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) { window.location.href = "index.html"; return; }
+      const uDoc = await getDoc(doc(db, "users", user.uid));
+      if (!uDoc.exists() || !["dos", "headteacher", "director"].includes(uDoc.data().role)) {
+        window.location.href = "index.html";
+        return;
+      }
+      initDOSListeners();
+    });
+
+    function initDOSListeners() {
+      // 1. Live Teachers Present in Every Class
+      onSnapshot(collection(db, "teacher_presence"), (snap) => {
+        const tbody = document.getElementById("dosPresenceBody");
+        tbody.innerHTML = snap.empty
+          ? `<tr><td colspan="4">No teachers have checked into class yet today.</td></tr>`
+          : "";
+        snap.forEach(d => {
+          const p = d.data();
+          tbody.innerHTML += `<tr>
+            <td><strong>${p.classLevel}</strong></td>
+            <td>${p.teacherName}</td>
+            <td>${p.subject}</td>
+            <td><strong style="color:var(--green-primary);">${p.status}</strong></td>
+          </tr>`;
+        });
+      });
+
+      // 2. Class Timetables
+      onSnapshot(collection(db, "timetables"), (snap) => {
+        const tbody = document.getElementById("dosTimetableBody");
+        tbody.innerHTML = snap.empty
+          ? `<tr><td colspan="5">No timetable entries created yet.</td></tr>`
+          : "";
+        snap.forEach(d => {
+          const t = d.data();
+          tbody.innerHTML += `<tr>
+            <td><strong>${t.classLevel}</strong></td>
+            <td>${t.day}</td>
+            <td>${t.timeSlot}</td>
+            <td>${t.subject}</td>
+            <td>${t.teacherName}</td>
+          </tr>`;
+        });
+      });
+
+      // 3. Teachers' Lesson Plans
+      onSnapshot(collection(db, "lesson_plans"), (snap) => {
+        const tbody = document.getElementById("dosLessonPlansBody");
+        tbody.innerHTML = snap.empty
+          ? `<tr><td colspan="6">No lesson plans submitted yet.</td></tr>`
+          : "";
+        snap.forEach(d => {
+          const l = d.data();
+          const row = document.createElement("tr");
+          [l.teacherName, l.classSubject, l.topic, l.content, l.status || "Submitted"].forEach((value) => {
+            const cell = document.createElement("td");
+            cell.textContent = value || "—";
+            row.appendChild(cell);
+          });
+          const actionCell = document.createElement("td");
+          const approve = document.createElement("button");
+          approve.className = "btn btn-green";
+          approve.type = "button";
+          approve.textContent = "Mark Reviewed";
+          approve.addEventListener("click", async () => {
+            try {
+              await updateDoc(doc(db, "lesson_plans", d.id), {
+                status: "Reviewed by DOS",
+                reviewedAt: serverTimestamp()
+              });
+            } catch (error) {
+              console.error("Unable to update lesson plan:", error);
+              alert("Could not update this lesson plan.");
+            }
+          });
+          actionCell.appendChild(approve);
+          row.appendChild(actionCell);
+          tbody.appendChild(row);
+        });
+      });
+
+      // 4. All recorded pupil marks
+      onSnapshot(collection(db, "pupil_marks"), (snap) => {
+        const tbody = document.getElementById("dosAllMarksBody");
+        tbody.replaceChildren();
+        if (snap.empty) {
+          tbody.innerHTML = '<tr><td colspan="6">No pupil marks have been recorded yet.</td></tr>';
+          return;
+        }
+        snap.forEach((d) => {
+          const mark = d.data();
+          const row = document.createElement("tr");
+          [mark.pupilId, mark.pupilName, mark.classLevel, mark.subject,
+           mark.score == null ? "—" : `${mark.score}%`, mark.grade].forEach((value) => {
+            const cell = document.createElement("td");
+            cell.textContent = value ?? "—";
+            row.appendChild(cell);
+          });
+          tbody.appendChild(row);
+        });
+      });
+    }
+
+    const timetableModal = document.getElementById("timetableModal");
+    const marksModal = document.getElementById("marksModal");
+    document.getElementById("openTimetableModalBtn").addEventListener("click", () => timetableModal.classList.add("open"));
+    document.getElementById("closeTimetableModal").addEventListener("click", () => timetableModal.classList.remove("open"));
+    document.getElementById("openMarksModalBtn").addEventListener("click", () => marksModal.classList.add("open"));
+    document.getElementById("closeMarksModal").addEventListener("click", () => marksModal.classList.remove("open"));
+
+    document.getElementById("timetableForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      try {
+        await addDoc(collection(db, "timetables"), {
+          classLevel: document.getElementById("ttClass").value,
+          day: document.getElementById("ttDay").value,
+          timeSlot: document.getElementById("ttTime").value.trim(),
+          subject: document.getElementById("ttSubject").value.trim(),
+          teacherName: document.getElementById("ttTeacher").value.trim(),
+          createdAt: serverTimestamp()
+        });
+        document.getElementById("timetableForm").reset();
+        timetableModal.classList.remove("open");
+      } catch (error) {
+        console.error("Unable to save timetable:", error);
+        alert("Could not save the timetable entry. Check your access permissions.");
+      }
+    });
+
+    document.getElementById("marksForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const score = Number(document.getElementById("mkScore").value);
+      if (!Number.isFinite(score) || score < 0 || score > 100) {
+        alert("Enter a score between 0 and 100.");
+        return;
+      }
+      try {
+        await addDoc(collection(db, "pupil_marks"), {
+          pupilId: document.getElementById("mkPupilId").value.trim(),
+          pupilName: document.getElementById("mkPupilName").value.trim(),
+          classLevel: document.getElementById("mkClass").value,
+          subject: document.getElementById("mkSubject").value,
+          score,
+          grade: document.getElementById("mkGrade").value.trim(),
+          createdAt: serverTimestamp()
+        });
+        document.getElementById("marksForm").reset();
+        marksModal.classList.remove("open");
+      } catch (error) {
+        console.error("Unable to save pupil mark:", error);
+        alert("Could not save the pupil mark. Check your access permissions.");
+      }
+    });
+
+    document.getElementById("logoutBtn").addEventListener("click", async () => {
+      await signOut(auth);
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>

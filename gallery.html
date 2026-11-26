@@ -1,137 +1,594 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>School Gallery | Kawa Academy Primary School</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    .filter-bar { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
-    .filter-btn { background: #fef9c3; color: #14532d; border: 2px solid #facc15; padding: 8px 16px; border-radius: 8px; font-weight: 700; cursor: pointer; }
-    .filter-btn.active, .filter-btn:hover { background: #15803d; color: #fff; border-color: #15803d; }
-    .lightbox-modal { display: none; position: fixed; inset: 0; background: rgba(20, 83, 45, 0.92); z-index: 9999; justify-content: center; align-items: center; padding: 20px; }
-    .lightbox-modal.open { display: flex; }
-    .lightbox-box { background: #fff; border: 4px solid #facc15; border-radius: 14px; max-width: 760px; width: 100%; overflow: hidden; text-align: center; position: relative; }
-    .lightbox-box img { width: 100%; max-height: 70vh; object-fit: contain; background: #f0fdf4; }
-    .lightbox-details { padding: 14px; background: #fefce8; border-top: 2px solid #facc15; }
-    .lightbox-close { position: absolute; top: 10px; right: 10px; background: #facc15; color: #14532d; border: none; font-size: 1.1rem; font-weight: 800; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>School Gallery | Alinda Preparatory School</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        .gallery-container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .upload-box {
+            background: #f5f8f2;
+            border: 2px dashed #287443;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .upload-box input,
+        .upload-box textarea {
+            display: block;
+            width: 100%;
+            margin: 12px 0;
+            padding: 12px;
+            box-sizing: border-box;
+        }
+
+        .upload-box button {
+            background: #287443;
+            color: white;
+            border: none;
+            padding: 12px 22px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .upload-box button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 20px;
+        }
+
+        .photo-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px #0002;
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 210px;
+            object-fit: cover;
+        }
+
+        .photo-info {
+            padding: 12px;
+        }
+
+        .upload-status {
+            font-weight: bold;
+            margin-top: 12px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+    </style>
+
 </head>
+
 <body>
-  <div class="badge-watermark" aria-hidden="true"></div>
 
-  <header class="navbar">
-    <div class="container nav-flex">
-      <a href="index.html" class="brand">
-        <img src="badge.png" alt="Kawa Academy Badge" class="nav-badge">
-        <div>
-          <h1>Kawa Academy</h1>
-          <span>School Photo Gallery (Nursery – P.7)</span>
-        </div>
-      </a>
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="gallery.html" class="btn-outline">Gallery</a>
-        <a href="pupil-login.html">Pupil & Admissions</a>
-        <a href="staff-login.html">Staff & Careers</a>
-        <a href="dos-login.html">DOS</a>
-        <a href="headteacher-login.html">Head Teacher</a>
-        <a href="directors-login.html">Directors</a>
-      </nav>
-    </div>
-  </header>
+<header>
+    <h1>Alinda Preparatory School – Kanara</h1>
+    <p>School Gallery</p>
+</header>
 
-  <section class="hero" style="padding: 40px 0;">
-    <div class="container hero-content">
-      <span class="role-badge gold">Campus & Pupil Life</span>
-      <h2>Kawa Academy Photo Gallery</h2>
-      <p>Click any photo to view it larger. Replace the image links below with your own school pictures.</p>
-    </div>
-  </section>
 
-  <main class="container" style="margin-bottom: 48px;">
-    <section class="card highlight-card">
-      <div class="filter-bar">
-        <button class="filter-btn active" onclick="filterGallery('all', this)">All Photos</button>
-        <button class="filter-btn" onclick="filterGallery('academics', this)">Academics</button>
-        <button class="filter-btn" onclick="filterGallery('sports', this)">Sports & Clubs</button>
-        <button class="filter-btn" onclick="filterGallery('campus', this)">School Events</button>
-      </div>
+<main class="gallery-container">
 
-      <div class="gallery-grid">
-        <div class="gallery-item" data-category="academics" onclick="openLightbox(this)">
-          <img src="images/photo1.jpg" alt="Primary Classrooms">
-          <div class="gallery-caption"><strong>Interactive Classrooms</strong><span>Primary & Nursery lessons</span></div>
-        </div>
-        <div class="gallery-item" data-category="academics" onclick="openLightbox(this)">
-          <img src="images/photo2.jpg" alt="Nursery Learning">
-          <div class="gallery-caption"><strong>Nursery Play & Discovery</strong><span>Baby, Middle & Top Class</span></div>
-        </div>
-        <div class="gallery-item" data-category="academics" onclick="openLightbox(this)">
-          <img src="images/photo3.jpg" alt="Computer Lab">
-          <div class="gallery-caption"><strong>ICT & Computer Literacy</strong><span>Hands-on digital learning</span></div>
-        </div>
-        <div class="gallery-item" data-category="sports" onclick="openLightbox(this)">
-          <img src="images/photo4.jpg" alt="Sports Day">
-          <div class="gallery-caption"><strong>Annual Sports & Games</strong><span>Athletics, football & netball</span></div>
-        </div>
-        <div class="gallery-item" data-category="sports" onclick="openLightbox(this)">
-          <img src="images/photo5.jpg" alt="Music Dance and Drama">
-          <div class="gallery-caption"><strong>Music, Dance & Drama</strong><span>Creative talent & culture</span></div>
-        </div>
-        <div class="gallery-item" data-category="campus" onclick="openLightbox(this)">
-          <img src="images/photo6.jpg" alt="Morning Assembly">
-          <div class="gallery-caption"><strong>Morning School Assembly</strong><span>Discipline & moral values</span></div>
-        </div>
-        <div class="gallery-item" data-category="campus" onclick="openLightbox(this)">
-          <img src="images/photo7.jpg" alt="School Compound">
-          <div class="gallery-caption"><strong>Safe & Green Compound</strong><span>Clean learning environment</span></div>
-        </div>
-        <div class="gallery-item" data-category="campus" onclick="openLightbox(this)">
-          <img src="images/photo8.jpg" alt="Graduation Day">
-          <div class="gallery-caption"><strong>Top Class Graduation</strong><span>Celebrating pupil milestones</span></div>
-        </div>
-      </div>
+    <h2>Our School Memories</h2>
+
+
+    <!-- Only authorised staff can see this upload form. -->
+    <section id="uploadSection" class="upload-box hidden">
+
+        <h3>Upload School Photos</h3>
+
+        <form id="uploadForm">
+
+            <label for="photoTitle">Photo title:</label>
+
+            <input
+                type="text"
+                id="photoTitle"
+                placeholder="Example: Sports Day 2026"
+                maxlength="100"
+                required
+            >
+
+            <label for="photoDescription">Description:</label>
+
+            <textarea
+                id="photoDescription"
+                placeholder="Write a short description..."
+                maxlength="500"
+                rows="3"
+            ></textarea>
+
+            <label for="photoFile">Select photos:</label>
+
+            <input
+                type="file"
+                id="photoFile"
+                accept="image/jpeg,image/png,image/webp"
+                multiple
+                required
+            >
+
+            <p>
+                Allowed formats: JPG, PNG and WEBP.
+                Maximum size: 5 MB per photo.
+            </p>
+
+            <button type="submit" id="uploadButton">
+                Upload Photos
+            </button>
+
+            <p id="uploadStatus" class="upload-status" aria-live="polite"></p>
+
+        </form>
+
     </section>
-  </main>
 
-  <div class="lightbox-modal" id="lightboxModal" onclick="closeLightbox(event)">
-    <div class="lightbox-box">
-      <button class="lightbox-close" onclick="closeLightbox(event, true)">&times;</button>
-      <img id="lightboxImg" src="" alt="Expanded Photo">
-      <div class="lightbox-details">
-        <h3 id="lightboxTitle" style="color:#14532d; margin-bottom:4px;"></h3>
-        <p id="lightboxDesc" style="color:#475569; font-size:0.9rem;"></p>
-      </div>
-    </div>
-  </div>
 
-  <footer class="footer">
-    <div class="container">
-      <p>&copy; 2026 Kawa Academy Primary School. All Rights Reserved.</p>
-    </div>
-  </footer>
+    <!-- Uploaded photos appear here. -->
+    <section>
 
-  <script>
-    function filterGallery(category, btn) {
-      document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      document.querySelectorAll(".gallery-item").forEach(item => {
-        item.style.display = (category === "all" || item.dataset.category === category) ? "block" : "none";
-      });
+        <h2>Photo Collection</h2>
+
+        <div id="galleryGrid" class="gallery-grid">
+            <p>Loading photos...</p>
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <p>Alinda Preparatory School – Kanara</p>
+    <p>Education for a Bright Future</p>
+
+</footer>
+
+
+<script type="module">
+
+    // ==========================================
+    // FIREBASE IMPORTS
+    // ==========================================
+
+    import { auth, db } from "./firebase-config.js";
+
+    import {
+        collection,
+        addDoc,
+        getDocs,
+        query,
+        where,
+        orderBy,
+        doc,
+        getDoc,
+        serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
+
+    import {
+        onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
+
+
+    // ==========================================
+    // CLOUDINARY SETTINGS
+    // ==========================================
+
+    // Replace these with your real Cloudinary details.
+
+    const CLOUDINARY_CLOUD_NAME = "oorgbbjm";
+
+    const CLOUDINARY_UPLOAD_PRESET = "alinda_school_gallery";
+
+
+    // ==========================================
+    // HTML ELEMENTS
+    // ==========================================
+
+    const uploadSection =
+        document.getElementById("uploadSection");
+
+    const uploadForm =
+        document.getElementById("uploadForm");
+
+    const uploadButton =
+        document.getElementById("uploadButton");
+
+    const uploadStatus =
+        document.getElementById("uploadStatus");
+
+    const galleryGrid =
+        document.getElementById("galleryGrid");
+
+
+    let currentUser = null;
+
+    let currentUserName = "School Staff";
+
+
+    // ==========================================
+    // CHECK USER PERMISSIONS
+    // ==========================================
+
+    onAuthStateChanged(auth, async (user) => {
+
+        currentUser = user;
+
+        uploadSection.classList.add("hidden");
+
+        if (!user) {
+
+            await loadGallery();
+
+            return;
+
+        }
+
+        try {
+
+            const userDocument = await getDoc(
+                doc(db, "users", user.uid)
+            );
+
+            if (userDocument.exists()) {
+
+                const userData = userDocument.data();
+
+                currentUserName =
+                    userData.fullName || "School Staff";
+
+                const allowedRoles = [
+                    "headteacher",
+                    "director",
+                    "staff"
+                ];
+
+                if (allowedRoles.includes(userData.role)) {
+
+                    uploadSection.classList.remove("hidden");
+
+                }
+
+            }
+
+        } catch (error) {
+
+            console.error("Account check failed:", error);
+
+        }
+
+        await loadGallery();
+
+    });
+
+
+    // ==========================================
+    // UPLOAD PHOTO TO CLOUDINARY
+    // ==========================================
+
+    async function uploadToCloudinary(file) {
+
+        const uploadUrl =
+            `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
+
+        const formData = new FormData();
+
+        formData.append("file", file);
+
+        formData.append(
+            "upload_preset",
+            CLOUDINARY_UPLOAD_PRESET
+        );
+
+        const response = await fetch(uploadUrl, {
+
+            method: "POST",
+
+            body: formData
+
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+
+            throw new Error(
+                result.error?.message || "Cloudinary upload failed."
+            );
+
+        }
+
+        return result.secure_url;
+
     }
-    function openLightbox(card) {
-      document.getElementById("lightboxImg").src = card.querySelector("img").src;
-      document.getElementById("lightboxTitle").textContent = card.querySelector("strong").textContent;
-      document.getElementById("lightboxDesc").textContent = card.querySelector("span").textContent;
-      document.getElementById("lightboxModal").classList.add("open");
+
+
+    // ==========================================
+    // HANDLE PHOTO UPLOAD FORM
+    // ==========================================
+
+    uploadForm.addEventListener("submit", async (event) => {
+
+        event.preventDefault();
+
+        if (!currentUser) {
+
+            uploadStatus.textContent =
+                "Please sign in first.";
+
+            return;
+
+        }
+
+        if (
+            CLOUDINARY_CLOUD_NAME === "YOUR_CLOUD_NAME" ||
+            CLOUDINARY_UPLOAD_PRESET === "YOUR_UPLOAD_PRESET"
+        ) {
+
+            uploadStatus.textContent =
+                "Please configure your Cloudinary settings first.";
+
+            return;
+
+        }
+
+        const title =
+            document.getElementById("photoTitle").value.trim();
+
+        const description =
+            document.getElementById("photoDescription").value.trim();
+
+        const files =
+            document.getElementById("photoFile").files;
+
+
+        if (!title || files.length === 0) {
+
+            uploadStatus.textContent =
+                "Enter a title and select photos.";
+
+            return;
+
+        }
+
+        if (files.length > 10) {
+
+            uploadStatus.textContent =
+                "You can upload a maximum of 10 photos at once.";
+
+            return;
+
+        }
+
+        uploadButton.disabled = true;
+
+        let successfulUploads = 0;
+
+
+        try {
+
+            for (const file of files) {
+
+                // Check the image format.
+                const allowedTypes = [
+                    "image/jpeg",
+                    "image/png",
+                    "image/webp"
+                ];
+
+                if (!allowedTypes.includes(file.type)) {
+
+                    throw new Error(
+                        file.name + " has an unsupported format."
+                    );
+
+                }
+
+
+                // Check the image size.
+                if (file.size > 5 * 1024 * 1024) {
+
+                    throw new Error(
+                        file.name + " is larger than 5 MB."
+                    );
+
+                }
+
+
+                // Upload image to Cloudinary.
+                const imageUrl =
+                    await uploadToCloudinary(file);
+
+
+                // Save image information in Firebase Firestore.
+                await addDoc(
+                    collection(db, "school_gallery"),
+                    {
+
+                        title: title,
+
+                        description: description,
+
+                        imageUrl: imageUrl,
+
+                        published: true,
+
+                        postedBy: currentUserName,
+
+                        uploadedBy: currentUser.uid,
+
+                        createdAt: serverTimestamp()
+
+                    }
+                );
+
+
+                successfulUploads++;
+
+                uploadStatus.textContent =
+                    successfulUploads +
+                    " of " +
+                    files.length +
+                    " photos uploaded successfully.";
+
+            }
+
+
+            uploadStatus.textContent =
+                "All photos uploaded successfully!";
+
+            uploadForm.reset();
+
+            await loadGallery();
+
+
+        } catch (error) {
+
+            console.error("Upload error:", error);
+
+            uploadStatus.textContent =
+                "Upload failed: " + error.message;
+
+        } finally {
+
+            uploadButton.disabled = false;
+
+        }
+
+    });
+
+
+    // ==========================================
+    // DISPLAY PHOTOS FROM FIRESTORE
+    // ==========================================
+
+    async function loadGallery() {
+
+        try {
+
+            const galleryQuery = query(
+
+                collection(db, "school_gallery"),
+
+                where("published", "==", true),
+
+                orderBy("createdAt", "desc")
+
+            );
+
+
+            const snapshot = await getDocs(galleryQuery);
+
+            galleryGrid.replaceChildren();
+
+
+            if (snapshot.empty) {
+
+                const message = document.createElement("p");
+
+                message.textContent =
+                    "No photos have been uploaded yet.";
+
+                galleryGrid.appendChild(message);
+
+                return;
+
+            }
+
+
+            snapshot.forEach((documentSnapshot) => {
+
+                const photo = documentSnapshot.data();
+
+                const card = document.createElement("article");
+
+                card.className = "photo-card";
+
+
+                const image = document.createElement("img");
+
+                image.src = photo.imageUrl;
+
+                image.alt = photo.title || "School photograph";
+
+                image.loading = "lazy";
+
+
+                const information = document.createElement("div");
+
+                information.className = "photo-info";
+
+
+                const heading = document.createElement("h3");
+
+                heading.textContent =
+                    photo.title || "School Photo";
+
+
+                const description = document.createElement("p");
+
+                description.textContent =
+                    photo.description || "";
+
+
+                const postedBy = document.createElement("small");
+
+                postedBy.textContent =
+                    "Uploaded by: " +
+                    (photo.postedBy || "School Staff");
+
+
+                information.append(
+                    heading,
+                    description,
+                    postedBy
+                );
+
+                card.append(image, information);
+
+                galleryGrid.appendChild(card);
+
+            });
+
+
+        } catch (error) {
+
+            console.error("Gallery loading error:", error);
+
+            galleryGrid.textContent =
+                "Unable to load photos. Check Firebase permissions.";
+
+        }
+
     }
-    function closeLightbox(event, force = false) {
-      if (force || event.target.id === "lightboxModal") {
-        document.getElementById("lightboxModal").classList.remove("open");
-      }
-    }
-  </script>
-  <script src="app.js"></script>
+
+</script>
+
 </body>
 </html>

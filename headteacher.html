@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Head Teacher Dashboard | Alinda Preparatory School</title>
+
+    <!-- Administration pages should not appear in search results. -->
+    <meta name="robots" content="noindex, nofollow">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header class="navbar">
+
+        <div class="brand">
+            <div class="brand-badge">APS</div>
+
+            <div>
+                <h1>ALINDA PREPARATORY SCHOOL</h1>
+                <small>Head Teacher Administration</small>
+            </div>
+        </div>
+
+        <nav class="nav-actions">
+            <a href="index.html" class="btn btn-yellow">Home</a>
+            <a href="school-profile.html" class="btn btn-outline">About School</a>
+            <a href="directors.html" class="btn btn-outline">Directors</a>
+
+            <button id="logoutBtn" class="btn btn-outline">
+                Sign Out
+            </button>
+        </nav>
+
+    </header>
+
+
+    <main class="container">
+
+        <!-- Dashboard welcome message -->
+        <section class="card gold-top">
+
+            <p class="eyebrow">School Administration</p>
+
+            <h2>Head Teacher Dashboard</h2>
+
+            <p id="welcomeText">
+                Checking your account...
+            </p>
+
+        </section>
+
+
+        <!-- Three main administration sections -->
+        <div class="grid-3">
+
+            <!-- Publish notices -->
+            <section class="card">
+
+                <h3>Publish School Notice</h3>
+
+                <form id="noticeForm">
+
+                    <label for="noticeTitle">
+                        Notice Title
+                    </label>
+
+                    <input
+                        type="text"
+                        id="noticeTitle"
+                        required
+                        maxlength="100"
+                    >
+
+                    <label for="noticeBody">
+                        Notice Message
+                    </label>
+
+                    <textarea
+                        id="noticeBody"
+                        required
+                        maxlength="3000"
+                    ></textarea>
+
+                    <button class="btn btn-green" type="submit">
+                        Publish Notice
+                    </button>
+
+                </form>
+
+                <p id="noticeMsg" role="status"></p>
+
+            </section>
+
+
+            <!-- Admission applications -->
+            <section class="card">
+
+                <h3>Admission Applications</h3>
+
+                <p id="admissionCount">
+                    Loading applications...
+                </p>
+
+                <div id="admissionsList">
+                    Loading...
+                </div>
+
+            </section>
+
+
+            <!-- Staff requests -->
+            <section class="card">
+
+                <h3>Staff Requests</h3>
+
+                <div id="staffRequestsList">
+                    Loading requests...
+                </div>
+
+            </section>
+
+        </div>
+
+
+        <!-- Published notices -->
+        <section class="card">
+
+            <h3>Recently Published Notices</h3>
+
+            <div id="noticesList">
+                Loading notices...
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        <p>
+            &copy; 2026 Alinda Preparatory School - Kanara.
+            Education for a Bright Future.
+        </p>
+    </footer>
+
+
+    <script type="module">
+
+        // Firebase connection.
+        import { auth, db } from "./firebase-config.js";
+
+        import {
+            onAuthStateChanged,
+            signOut
+        } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
+
+        import {
+            doc,
+            getDoc,
+            collection,
+            addDoc,
+            onSnapshot,
+            query,
+            orderBy,
+            limit,
+            serverTimestamp
+        } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
+
+
+        // Short function for finding HTML elements.
+        const $ = id => document.getElementById(id);
+
+        let currentUser = null;
+
+
+        // Only authorised Head Teachers and Directors can enter.
+        onAuthStateChanged(auth, async user => {
+
+            if (!user) {
+                location.replace("index.html");
+                return;
+            }
+
+            try {
+
+                const account = await getDoc(
+                    doc(db, "users", user.uid)
+                );
+
+                if (
+                    !account.exists() ||
+                    !["headteacher", "director"].includes(
+                        account.data().role
+                    )
+                ) {
+
+                    alert("You are not authorised to access this page.");
+
+                    location.replace("index.html");
+                    return;
+
+                }
+
+                currentUser = account.data();
+
+                $("welcomeText").textContent =
+                    `Welcome, ${currentUser.fullName || user.email}`;
+
+                loadDashboard();
+
+            } catch (error) {
+
+                console.error(error);
+
+                $("welcomeText").textContent =
+                    "Unable to verify your account.";
+
+            }
+
+        });
+
+
+        // Load admissions, requests and notices.
+        function loadDashboard() {
+
+            // Admissions
+            onSnapshot(
+                query(
+                    collection(db, "admissions"),
+                    orderBy("submittedAt", "desc"),
+                    limit(30)
+                ),
+
+                snapshot => {
+
+                    $("admissionCount").textContent =
+                        `${snapshot.size} recent applications`;
+
+                    const box = $("admissionsList");
+
+                    box.replaceChildren();
+
+                    if (snapshot.empty) {
+                        box.textContent = "No applications received.";
+                        return;
+                    }
+
+                    snapshot.forEach(document => {
+
+                        const item = document.data();
+
+                        const article = document.createElement("article");
+
+                        article.className = "card";
+
+                        const title = document.createElement("strong");
+
+                        title.textContent =
+                            item.childName || "Applicant";
+
+                        const details = document.createElement("p");
+
+                        details.textContent =
+                            `${item.childClass || "Class not stated"} | ` +
+                            `${item.parentName || "Parent not stated"} | ` +
+                            `${item.parentPhone || ""} | ` +
+                            `${item.status || "Pending"}`;
+
+                        article.append(title, details);
+
+                        box.appendChild(article);
+
+                    });
+
+                },
+
+                error => {
+
+                    console.error(error);
+
+                    $("admissionsList").textContent =
+                        "Unable to load applications.";
+
+                }
+            );
+
+
+            // Staff requests
+            onSnapshot(
+                query(
+                    collection(db, "staff_requests"),
+                    orderBy("createdAt", "desc"),
+                    limit(20)
+                ),
+
+                snapshot => {
+
+                    const box = $("staffRequestsList");
+
+                    box.replaceChildren();
+
+                    if (snapshot.empty) {
+                        box.textContent = "No staff requests.";
+                        return;
+                    }
+
+                    snapshot.forEach(document => {
+
+                        const item = document.data();
+
+                        const article = document.createElement("article");
+
+                        article.className = "card";
+
+                        const title = document.createElement("strong");
+
+                        title.textContent =
+                            `${item.teacherName || "Staff"} - ${item.type || "Request"}`;
+
+                        const details = document.createElement("p");
+
+                        details.textContent =
+                            `${item.details || ""} | Status: ${item.status || "Pending"}`;
+
+                        article.append(title, details);
+
+                        box.appendChild(article);
+
+                    });
+
+                },
+
+                error => {
+
+                    console.error(error);
+
+                    $("staffRequestsList").textContent =
+                        "Unable to load staff requests.";
+
+                }
+            );
+
+
+            // Recent school notices
+            onSnapshot(
+                query(
+                    collection(db, "school_notices"),
+                    orderBy("createdAt", "desc"),
+                    limit(10)
+                ),
+
+                snapshot => {
+
+                    const box = $("noticesList");
+
+                    box.replaceChildren();
+
+                    if (snapshot.empty) {
+                        box.textContent = "No notices published.";
+                        return;
+                    }
+
+                    snapshot.forEach(document => {
+
+                        const item = document.data();
+
+                        const article = document.createElement("article");
+
+                        article.className = "card";
+
+                        const title = document.createElement("h4");
+
+                        title.textContent = item.title || "School Notice";
+
+                        const message = document.createElement("p");
+
+                        message.textContent = item.body || "";
+
+                        article.append(title, message);
+
+                        box.appendChild(article);
+
+                    });
+
+                },
+
+                error => console.error(error)
+
+            );
+
+        }
+
+
+        // Publish a new school announcement.
+        $("noticeForm").addEventListener("submit", async event => {
+
+            event.preventDefault();
+
+            const button = event.currentTarget.querySelector("button");
+
+            button.disabled = true;
+
+            $("noticeMsg").textContent = "Publishing notice...";
+
+            try {
+
+                await addDoc(
+                    collection(db, "school_notices"),
+                    {
+                        title: $("noticeTitle").value.trim(),
+
+                        body: $("noticeBody").value.trim(),
+
+                        postedBy:
+                            currentUser.fullName ||
+                            auth.currentUser.email,
+
+                        createdAt: serverTimestamp(),
+
+                        published: true
+                    }
+                );
+
+                event.currentTarget.reset();
+
+                $("noticeMsg").textContent =
+                    "Notice published successfully.";
+
+            } catch (error) {
+
+                console.error(error);
+
+                $("noticeMsg").textContent =
+                    "Publishing failed. Check Firebase permissions.";
+
+            } finally {
+
+                button.disabled = false;
+
+            }
+
+        });
+
+
+        // Sign out.
+        $("logoutBtn").addEventListener("click", async () => {
+
+            await signOut(auth);
+
+            location.replace("index.html");
+
+        });
+
+    </script>
+
+</body>
+</html>

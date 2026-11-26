@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Board of Directors Oversight | Alinda Preparatory School - Kanara</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="brand">
+      <div class="brand-badge">APS</div>
+      <div>
+        <h1>ALINDA PREPARATORY SCHOOL - KANARA</h1>
+        <small>Education for a Bright Future</small>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <a href="index.html" class="btn btn-yellow">Home</a>
+      <a href="school-profile.html" class="btn btn-outline">About School</a>
+      <a href="gallery.html" class="btn btn-outline">Gallery</a>
+      <span class="nav-pill">Board of Directors Oversight</span>
+      <button class="btn btn-outline" id="logoutBtn">Sign Out</button>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- EXECUTIVE KPI OVERVIEW -->
+    <div class="grid-3">
+      <div class="card gold-top">
+        <small style="color:#b45309; font-weight:800;">CONFIRMED SCHOOL TREASURY</small>
+        <h2 id="dirSystemBalance" style="margin:8px 0; color:var(--green-dark);">UGX 0</h2>
+        <p style="font-size:0.86rem; color:var(--text-muted);">Live balance synchronized by Bursar</p>
+      </div>
+      <div class="card">
+        <small style="color:var(--green-primary); font-weight:800;">ENROLLED PUPILS IN LEDGER</small>
+        <h2 id="dirPupilCount" style="margin:8px 0;">0</h2>
+        <p style="font-size:0.86rem; color:var(--text-muted);">Active pupils tracked across classes</p>
+      </div>
+      <div class="card">
+        <small style="color:var(--green-primary); font-weight:800;">ACTIVE CLASSES WITH TEACHERS</small>
+        <h2 id="dirActiveClasses" style="margin:8px 0;">0</h2>
+        <p style="font-size:0.86rem; color:var(--text-muted);">Live classroom attendance reported to DOS</p>
+      </div>
+    </div>
+
+    <!-- DIRECT DEPARTMENT PAGE OVERSIGHT SWITCHER -->
+    <section class="card gold-top" style="margin-bottom:30px;">
+      <h3 class="section-title">Inspect Any Department Page Live</h3>
+      <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:14px;">
+        As a member of the Board of Directors, you have full oversight access to inspect every operational page in real time:
+      </p>
+      <div style="display:flex; gap:12px; flex-wrap:wrap;">
+        <a href="bursar.html" class="btn btn-green">Inspect Bursar & Finance Page</a>
+        <a href="dos.html" class="btn btn-yellow">Inspect DOS Academics & Marks</a>
+        <a href="headteacher.html" class="btn btn-green">Inspect Head Teacher & Public Notices</a>
+        <a href="staff.html" class="btn btn-yellow">Inspect Staff Room Portal</a>
+        <a href="gallery.html" class="btn btn-green">Inspect School Activities Gallery</a>
+      </div>
+    </section>
+
+    <!-- LIVE BURSAR & SYSTEM NOTIFICATIONS TO DIRECTORS -->
+    <section>
+      <h3 class="section-title">Live Bursar Payment Confirmations & System Alerts</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Source Department</th>
+              <th>Alert Title</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody id="directorAlertsBody">
+            <tr><td colspan="3">Listening for live Bursar & department notifications...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- LIVE SCHOOL-WIDE ACTIVITY STREAM (ADMISSIONS, STAFF REQUESTS, LESSON PLANS) -->
+    <div class="grid-3" style="grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));">
+      <section class="card">
+        <h3 class="section-title">Recent Pupil Admissions</h3>
+        <div id="dirAdmissionsList" style="line-height:1.8; font-size:0.94rem;">Loading...</div>
+      </section>
+
+      <section class="card gold-top">
+        <h3 class="section-title">Staff Welfare & Internal Requests</h3>
+        <div id="dirStaffReqList" style="line-height:1.8; font-size:0.94rem;">Loading...</div>
+      </section>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Alinda Preparatory School - Kanara • Education for a Bright Future</p>
+  </footer>
+
+  <script type="module">
+    import { auth, db } from "./firebase-config.js";
+    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
+    import { doc, getDoc, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) { window.location.href = "index.html"; return; }
+      const uDoc = await getDoc(doc(db, "users", user.uid));
+      if (!uDoc.exists() || uDoc.data().role !== "director") {
+        window.location.href = "index.html";
+        return;
+      }
+      startDirectorOversight();
+    });
+
+    function startDirectorOversight() {
+      // 1. Treasury Balance
+      onSnapshot(doc(db, "finance_summary", "school_account"), (snap) => {
+        const bal = snap.exists() ? (snap.data().totalBalance || 0) : 0;
+        document.getElementById("dirSystemBalance").textContent = `UGX ${Number(bal).toLocaleString()}`;
+      });
+
+      // 2. Pupil Count
+      onSnapshot(collection(db, "pupils"), (snap) => {
+        document.getElementById("dirPupilCount").textContent = snap.size;
+      });
+
+      // 3. Teachers in Class
+      onSnapshot(collection(db, "teacher_presence"), (snap) => {
+        document.getElementById("dirActiveClasses").textContent = snap.size;
+      });
+
+      // 4. Live Bursar Confirmations & Alerts
+      onSnapshot(collection(db, "director_notifications"), (snap) => {
+        const tbody = document.getElementById("directorAlertsBody");
+        tbody.innerHTML = snap.empty
+          ? `<tr><td colspan="3">No Bursar confirmations or alerts recorded yet.</td></tr>`
+          : "";
+        snap.forEach(d => {
+          const n = d.data();
+          tbody.innerHTML += `<tr>
+            <td><strong style="color:var(--green-primary);">${n.source}</strong></td>
+            <td><strong>${n.title}</strong></td>
+            <td>${n.message}</td>
+          </tr>`;
+        });
+      });
+
+      // 5. Admissions Feed
+      onSnapshot(collection(db, "admissions"), (snap) => {
+        const box = document.getElementById("dirAdmissionsList");
+        box.innerHTML = snap.empty ? "No admissions submitted yet." : "";
+        snap.forEach(d => {
+          const a = d.data();
+          box.innerHTML += `<p>• <strong>${a.childName}</strong> (${a.childClass}) — <em>${a.status}</em></p>`;
+        });
+      });
+
+      // 6. Staff Requests Feed
+      onSnapshot(collection(db, "staff_requests"), (snap) => {
+        const box = document.getElementById("dirStaffReqList");
+        box.innerHTML = snap.empty ? "No internal staff requests." : "";
+        snap.forEach(d => {
+          const r = d.data();
+          box.innerHTML += `<p>• <strong>${r.teacherName}</strong> [${r.type}]: ${r.details} — <em>${r.status}</em></p>`;
+        });
+      });
+    }
+
+    document.getElementById("logoutBtn").onclick = async () => {
+      await signOut(auth);
+      window.location.href = "index.html";
+    };
+  </script>
+</body>
+</html>

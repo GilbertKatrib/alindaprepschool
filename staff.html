@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Staff Portal | Alinda Preparatory School - Kanara</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="brand">
+      <div class="brand-badge">APS</div>
+      <div>
+        <h1>ALINDA PREPARATORY SCHOOL - KANARA</h1>
+        <small>Education for a Bright Future</small>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <a href="index.html" class="btn btn-yellow">Home</a>
+      <a href="school-profile.html" class="btn btn-outline">About School</a>
+      <a href="gallery.html" class="btn btn-outline">Gallery</a>
+      <span class="nav-pill" id="staffNavTitle">Staff Room Portal</span>
+      <button class="btn btn-outline" id="logoutBtn">Sign Out</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="grid-3">
+      <!-- 1. CLASS PRESENCE CHECK-IN (SYNCS TO DOS) -->
+      <section class="card gold-top">
+        <h3 class="section-title">Daily Class Presence Check-In</h3>
+        <form id="classPresenceForm">
+          <label>Teacher Name</label>
+          <input type="text" id="presTeacherName" required />
+          <label>Class Currently Teaching</label>
+          <select id="presClass" required>
+            <option value="Nursery">Nursery</option>
+            <option value="P.1">P.1</option>
+            <option value="P.2">P.2</option>
+            <option value="P.3">P.3</option>
+            <option value="P.4">P.4</option>
+            <option value="P.5">P.5</option>
+            <option value="P.6">P.6</option>
+            <option value="P.7">P.7</option>
+          </select>
+          <label>Subject / Lesson Session</label>
+          <input type="text" id="presSubject" required placeholder="e.g., Mathematics (8:30 AM)" />
+          <label>Attendance Status</label>
+          <select id="presStatus" required>
+            <option value="Present in Class">Present in Class</option>
+            <option value="On School Duty">On School Duty</option>
+            <option value="Excused / Leave">Excused / Leave</option>
+          </select>
+          <button type="submit" class="btn btn-green" style="width:100%; justify-content:center;">Update Class Presence</button>
+        </form>
+        <p id="presMsg" style="margin-top:8px; font-weight:700; color:var(--green-primary);"></p>
+      </section>
+
+      <!-- 2. SUBMIT LESSON PLAN TO DOS -->
+      <section class="card">
+        <h3 class="section-title">Submit Lesson Plan to DOS</h3>
+        <form id="lessonPlanForm">
+          <label>Teacher Name</label>
+          <input type="text" id="lpTeacher" required />
+          <label>Class & Subject</label>
+          <input type="text" id="lpClassSubject" required placeholder="e.g., P.6 Integrated Science" />
+          <label>Topic & Sub-topic</label>
+          <input type="text" id="lpTopic" required />
+          <label>Lesson Objectives & Activities</label>
+          <textarea id="lpContent" rows="3" required></textarea>
+          <button type="submit" class="btn btn-yellow" style="width:100%; justify-content:center;">Send Lesson Plan to DOS</button>
+        </form>
+        <p id="lpMsg" style="margin-top:8px; font-weight:700; color:var(--green-primary);"></p>
+      </section>
+
+      <!-- 3. INTERNAL STAFF REQUEST TO DIRECTORS -->
+      <section class="card gold-top">
+        <h3 class="section-title">Confidential Request to Directors</h3>
+        <form id="staffReqForm">
+          <label>Your Name</label>
+          <input type="text" id="reqTeacher" required />
+          <label>Request Type</label>
+          <select id="reqType" required>
+            <option value="Classroom Materials">Classroom Materials</option>
+            <option value="Leave / Permission">Leave / Permission</option>
+            <option value="Staff Welfare / Advance">Staff Welfare / Advance</option>
+          </select>
+          <label>Details</label>
+          <textarea id="reqDetails" rows="3" required></textarea>
+          <button type="submit" class="btn btn-green" style="width:100%; justify-content:center;">Submit Confidentially</button>
+        </form>
+        <p id="reqMsg" style="margin-top:8px; font-weight:700; color:var(--green-primary);"></p>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Alinda Preparatory School - Kanara • Education for a Bright Future</p>
+  </footer>
+
+  <script type="module">
+    import { auth, db } from "./firebase-config.js";
+    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
+    import { doc, getDoc, setDoc, addDoc, collection, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) { window.location.href = "index.html"; return; }
+      const uDoc = await getDoc(doc(db, "users", user.uid));
+      if (!uDoc.exists() || !["staff", "dos", "headteacher", "director"].includes(uDoc.data().role)) {
+        window.location.href = "index.html";
+        return;
+      }
+      const name = uDoc.data().fullName || user.email;
+      document.getElementById("staffNavTitle").textContent = `Staff Page: ${name}`;
+      document.getElementById("presTeacherName").value = name;
+      document.getElementById("lpTeacher").value = name;
+      document.getElementById("reqTeacher").value = name;
+    });
+
+    document.getElementById("classPresenceForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const cls = document.getElementById("presClass").value;
+      await setDoc(doc(db, "teacher_presence", cls), {
+        classLevel: cls,
+        teacherName: document.getElementById("presTeacherName").value.trim(),
+        subject: document.getElementById("presSubject").value.trim(),
+        status: document.getElementById("presStatus").value,
+        updatedAt: serverTimestamp()
+      });
+      document.getElementById("presMsg").textContent = `Presence updated for ${cls} on DOS board!`;
+    });
+
+    document.getElementById("lessonPlanForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      await addDoc(collection(db, "lesson_plans"), {
+        teacherName: document.getElementById("lpTeacher").value.trim(),
+        classSubject: document.getElementById("lpClassSubject").value.trim(),
+        topic: document.getElementById("lpTopic").value.trim(),
+        content: document.getElementById("lpContent").value.trim(),
+        status: "Submitted for DOS Review",
+        createdAt: serverTimestamp()
+      });
+      document.getElementById("lpMsg").textContent = "Lesson plan sent to Director of Studies!";
+      document.getElementById("lpTopic").value = "";
+      document.getElementById("lpContent").value = "";
+    });
+
+    document.getElementById("staffReqForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      await addDoc(collection(db, "staff_requests"), {
+        teacherName: document.getElementById("reqTeacher").value.trim(),
+        type: document.getElementById("reqType").value,
+        details: document.getElementById("reqDetails").value.trim(),
+        status: "Pending",
+        createdAt: serverTimestamp()
+      });
+      document.getElementById("reqMsg").textContent = "Confidential request sent to Head Teacher & Directors.";
+      document.getElementById("reqDetails").value = "";
+    });
+
+    document.getElementById("logoutBtn").onclick = async () => {
+      await signOut(auth);
+      window.location.href = "index.html";
+    };
+  </script>
+</body>
+</html>

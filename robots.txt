@@ -1,0 +1,10 @@
+# Allow search engines to discover public school pages.
+User-agent: *
+
+Allow: /
+
+# Do not expose internal files as search results.
+Disallow: /firebase-config.js
+
+# Sitemap location will be updated after publishing.
+Sitemap: https://YOUR-DOMAIN/sitemap.xml

@@ -1,186 +1,428 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kawa Academy | Excellence in Primary Education</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        .fees-table-wrap { overflow-x: auto; margin-top: 16px; }
-        .fees-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; background: #ffffff; }
-        .fees-table th, .fees-table td { padding: 12px 15px; border: 1px solid #bbf7d0; text-align: left; }
-        .fees-table th { background: #15803d; color: #ffffff; }
-        .fees-table tr:nth-child(even) { background: #fefce8; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alinda Preparatory School - Kanara | Education for a Bright Future</title>
+  <meta name="description" content="Official website of Alinda Preparatory School - Kanara. View PLE UNEB performance, school fees structure, co-curricular activities, and verified portals." />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="theme-color" content="#103b2b" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Alinda Preparatory School - Kanara" />
+  <meta property="og:description" content="Education for a Bright Future. Discover Alinda Preparatory School - Kanara, its learning programmes, school activities and admissions information." />
+  <meta property="og:site_name" content="Alinda Preparatory School - Kanara" />
+  <meta name="twitter:card" content="summary" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <!-- School Badge Watermark -->
-    <div class="badge-watermark" aria-hidden="true"></div>
 
-    <header class="navbar">
-        <div class="container nav-flex">
-            <a href="index.html" class="brand">
-                <img src="badge.png" alt="Kawa Academy Badge" class="nav-badge">
-                <div>
-                    <h1>Kawa Academy</h1>
-                    <span>Nurturing Young Minds (Nursery – P.7)</span>
-                </div>
-            </a>
-            <!-- Horizontal Button Links -->
-            <nav>
-                <a href="pupil-login.html">Pupil & Admissions</a>
-                <a href="staff-login.html">Staff & Careers</a>
-                <a href="dos-login.html">DOS</a>
-                <a href="headteacher-login.html">Head Teacher</a>
-                <a href="directors-login.html" class="btn-outline">Directors</a>
-            </nav>
-        </div>
-    </header>
+  <header class="navbar">
+    <div class="brand">
+      <div class="brand-badge">APS</div>
+      <div>
+        <h1>ALINDA PREPARATORY SCHOOL - KANARA</h1>
+        <small>Motto: "EDUCATION FOR A BRIGHT FUTURE"</small>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <a href="index.html" class="btn btn-yellow">Home</a>
+      <a href="school-profile.html" class="btn btn-outline">About School</a>
+      <a href="gallery.html" class="btn btn-outline">Gallery</a>
+      <button class="btn btn-outline" id="openVerifyBtn">Verify Visitor Access</button>
+      <button class="btn btn-green" id="openPortalLoginBtn">Portal Sign In</button>
+    </div>
+  </header>
 
-    <section class="hero">
-        <div class="container hero-content">
-            <span class="role-badge gold">Admissions Open for Nursery & Primary One – Seven</span>
-            <h2>Building a Strong Foundation for Your Child's Future</h2>
-            <p>At Kawa Academy, we combine modern primary education, moral integrity, and dedicated teachers in a bright, safe, and joyful environment.</p>
-            <div class="hero-actions">
-                <a href="pupil-login.html" class="btn-secondary">Apply for Child's Vacancy</a>
-                <a href="staff-login.html" class="btn-primary" style="border: 2px solid #facc15;">Teacher Applications & Portal</a>
-            </div>
+  <section class="hero">
+    <span class="motto-tag">EDUCATION FOR A BRIGHT FUTURE</span>
+    <h2>Welcome to Alinda Preparatory School - Kanara</h2>
+    <p>Nurturing disciplined, confident, and academically excellent learners from Nursery through Primary Seven (P.7) in a safe, supportive environment.</p>
+    <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+      <a href="#uneb-section" class="btn btn-yellow">PLE UNEB Performance</a>
+      <a href="#fees-section" class="btn btn-outline">Fees Structure</a>
+      <a href="gallery.html" class="btn btn-green">School Activities & Gallery</a>
+    </div>
+  </section>
+
+  <main class="container">
+
+    <section id="updates-section">
+      <h3 class="section-title">Official School Notices & Administration Updates</h3>
+      <div class="grid-3" id="liveSchoolNotices">
+        <div class="card">
+          <h4>Loading School Updates...</h4>
+          <p>Fetching latest notices from Head Teacher & Board of Directors.</p>
         </div>
+      </div>
     </section>
 
-    <main class="container">
-        <!-- Academic Sections -->
-        <section class="features-grid">
-            <div class="card">
-                <h3>Early Childhood (Nursery)</h3>
-                <p>Baby, Middle, and Top Class programs focused on literacy, numeracy, play-based discovery, and confidence.</p>
-            </div>
-            <div class="card">
-                <h3>Lower & Upper Primary (P.1 – P.7)</h3>
-                <p>Structured primary curriculum preparing learners for PLE with strong English, Mathematics, Science, and SST.</p>
-            </div>
-            <div class="card">
-                <h3>Co-Curricular & Child Welfare</h3>
-                <p>Music, sports, debate, computer literacy, and attentive pastoral care ensuring every pupil thrives.</p>
-            </div>
-        </section>
+    <section id="uneb-section">
+      <h3 class="section-title">PLE UNEB Academic Performance</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Exam Year</th>
+              <th>Total Candidates</th>
+              <th>Division 1</th>
+              <th>Division 2</th>
+              <th>Pass Rate</th>
+              <th>Best Aggregate</th>
+            </tr>
+          </thead>
+          <tbody id="unebTableBody">
+            <tr><td colspan="6">Loading verified UNEB PLE records...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
 
-        <!-- Clean, Fixed School Life Gallery -->
-        <section class="card wide-card highlight-card">
-            <h2>Life at Kawa Academy (School Gallery)</h2>
-            <p class="subtitle">Explore our vibrant classrooms, computer studies, sports, and pupil activities.</p>
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <img src="classrooms.jpg" alt="Modern Primary Classrooms">
-                    <div class="gallery-caption">
-                        <strong>Interactive Classrooms</strong>
-                        <span>Engaging Nursery & Primary lessons</span>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="computer-lab.jpg" alt="Primary Computer Lab">
-                    <div class="gallery-caption">
-                        <strong>ICT & Computer Literacy</strong>
-                        <span>Hands-on digital skills for young learners</span>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="sports.jpg" alt="Sports and Games">
-                    <div class="gallery-caption">
-                        <strong>Sports & Physical Education</strong>
-                        <span>Teamwork, athletics, and healthy play</span>
-                    </div>
-                </div>
-                <div class="gallery-item">
-                    <img src="assembly.jpg" alt="Morning School Assembly">
-                    <div class="gallery-caption">
-                        <strong>Discipline & Moral Values</strong>
-                        <span>Building confident, respectful leaders</span>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <section id="fees-section">
+      <h3 class="section-title">Termly School Fees Structure (UGX)</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Class Section</th>
+              <th>Day Tuition</th>
+              <th>Boarding Tuition</th>
+              <th>School Feeding (Cash Option)</th>
+              <th>Uniform Package</th>
+            </tr>
+          </thead>
+          <tbody id="feesTableBody">
+            <tr><td colspan="5">Loading current fees structure...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
 
-        <!-- Termly School Fees Structure -->
-        <section class="card wide-card">
-            <h2>Termly School Fees Structure (UGX)</h2>
-            <p class="subtitle">Transparent termly fees inclusive of break porridge, lunch, and basic co-curricular activities.</p>
-            <div class="fees-table-wrap">
-                <table class="fees-table">
-                    <thead>
-                        <tr>
-                            <th>Class Level</th>
-                            <th>Day Section (Per Term)</th>
-                            <th>Boarding Section (Per Term)</th>
-                            <th>Interview & Admission Fee</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Nursery (Baby, Middle & Top Class)</strong></td>
-                            <td>UGX 350,000</td>
-                            <td><em>Day Only</em></td>
-                            <td>UGX 30,000</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Lower Primary (P.1 – P.3)</strong></td>
-                            <td>UGX 450,000</td>
-                            <td>UGX 780,000</td>
-                            <td>UGX 40,000</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Middle Primary (P.4 – P.6)</strong></td>
-                            <td>UGX 520,000</td>
-                            <td>UGX 850,000</td>
-                            <td>UGX 40,000</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Candidate Class (Primary Seven – P.7)</strong></td>
-                            <td>UGX 600,000</td>
-                            <td>UGX 950,000</td>
-                            <td>UGX 50,000</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <!-- Quick School Portals -->
-        <section class="card wide-card portal-directory">
-            <h2>Quick School Portals</h2>
-            <p class="subtitle">Select your designated portal below to sign in or submit an application.</p>
-            <div class="portal-links-grid">
-                <a href="pupil-login.html" class="portal-tile">
-                    <strong>Pupils & Parents</strong>
-                    <span>Pupil Login & Child Vacancy Form</span>
-                </a>
-                <a href="staff-login.html" class="portal-tile">
-                    <strong>Teachers & Applicants</strong>
-                    <span>Staff Login, Job Applications & Requests to Directors</span>
-                </a>
-                <a href="dos-login.html" class="portal-tile">
-                    <strong>Director of Studies (DOS)</strong>
-                    <span>Exams, Timetables & Academic Placement</span>
-                </a>
-                <a href="headteacher-login.html" class="portal-tile">
-                    <strong>Head Teacher Office</strong>
-                    <span>School Administration & Admissions Review</span>
-                </a>
-                <a href="directors-login.html" class="portal-tile">
-                    <strong>Board of Directors</strong>
-                    <span>Executive Governance & Staff Approvals</span>
-                </a>
-            </div>
-        </section>
-    </main>
-
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2026 Kawa Academy Primary School. All Rights Reserved.</p>
+    <section id="activities-section">
+      <h3 class="section-title">Co-Curricular & School Life Activities</h3>
+      <div class="grid-3">
+        <div class="card">
+          <h4>Academics & ICT Lab</h4>
+          <p>Competency-based thematic learning, weekly P.7 PLE revision clinics, computer literacy, and practical science.</p>
         </div>
-    </footer>
+        <div class="card gold-top">
+          <h4>Sports, Athletics & Scouting</h4>
+          <p>Football, netball, athletics, MDD (Music, Dance & Drama), debate clubs, and leadership grooming.</p>
+        </div>
+        <div class="card">
+          <h4>Child Welfare & Feeding</h4>
+          <p>Nutritious school meals (parents can pay cash or send packed food) and dedicated sick-bay & guidance care.</p>
+        </div>
+      </div>
+    </section>
 
-    <script src="app.js"></script>
+    <section id="verifiedExtendedSection" class="card gold-top">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+        <div>
+          <h3>Extended Prospectus, Admissions & Virtual Campus Tour</h3>
+          <p id="verifyStatusText" style="color:var(--text-muted); margin-top:4px;">
+            Verify your parent/visitor code or sign in to unlock full admission forms, transport routes, and detailed gallery access.
+          </p>
+        </div>
+        <button class="btn btn-green" id="unlockExtraBtn">Unlock Full Details</button>
+      </div>
+      <div id="unlockedContent" style="display:none; margin-top:18px; border-top:1px solid #e2e8f0; padding-top:16px;">
+        <p><strong>Verified Visitor Access Active!</strong> You now have full access to:</p>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+          <a href="gallery.html" class="btn btn-yellow">Open Full School Activity Gallery</a>
+          <button class="btn btn-green" id="openAdmissionModalBtn">Apply for Child Vacancy</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- VISITOR VERIFICATION MODAL -->
+  <div class="modal" id="verifyModal">
+    <div class="modal-box">
+      <h3 style="color:var(--green-dark); margin-bottom:8px;">Verify Visitor / Parent Access</h3>
+      <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:12px;">Enter your contact and the verification passcode issued by Alinda Preparatory School - Kanara.</p>
+      <form id="visitorVerifyForm">
+        <label>Full Name</label>
+        <input type="text" id="visitorName" required placeholder="e.g., Grace Nansubuga" />
+        <label>Phone Number or Email</label>
+        <input type="text" id="visitorContact" required placeholder="e.g., 0772000000" />
+        <label>School Verification Code</label>
+        <input type="password" id="visitorCode" required placeholder="Enter office verification code" />
+        <div style="display:flex; gap:10px; justify-content:flex-end;">
+          <button type="button" class="btn" id="closeVerifyModal">Cancel</button>
+          <button type="submit" class="btn btn-green">Verify & Unlock</button>
+        </div>
+      </form>
+      <p id="verifyMsg" style="margin-top:10px; font-weight:600; color:#b91c1c;"></p>
+    </div>
+  </div>
+
+  <!-- VERIFIED ONLINE ADMISSION APPLICATION MODAL -->
+  <div class="modal" id="admissionModal">
+    <div class="modal-box">
+      <h3 style="color:var(--green-dark); margin-bottom:8px;">Pupil Vacancy Application</h3>
+      <form id="publicAdmissionForm">
+        <label>Child's Full Name</label>
+        <input type="text" id="admChildName" required />
+        <label>Class Applying For</label>
+        <select id="admChildClass" required>
+          <option value="Baby Class">Baby Class</option>
+          <option value="Middle Class">Middle Class</option>
+          <option value="Top Class">Top Class</option>
+          <option value="P.1">Primary One (P.1)</option>
+          <option value="P.2">Primary Two (P.2)</option>
+          <option value="P.3">Primary Three (P.3)</option>
+          <option value="P.4">Primary Four (P.4)</option>
+          <option value="P.5">Primary Five (P.5)</option>
+          <option value="P.6">Primary Six (P.6)</option>
+          <option value="P.7">Primary Seven (P.7)</option>
+        </select>
+        <label>Parent / Guardian Name</label>
+        <input type="text" id="admParentName" required />
+        <label>Parent Phone Number</label>
+        <input type="tel" id="admParentPhone" required />
+        <div style="display:flex; gap:10px; justify-content:flex-end;">
+          <button type="button" class="btn" id="closeAdmissionModal">Cancel</button>
+          <button type="submit" class="btn btn-yellow">Submit Application</button>
+        </div>
+      </form>
+      <p id="admMsg" style="margin-top:10px; font-weight:600; color:var(--green-primary);"></p>
+    </div>
+  </div>
+
+  <!-- ROLE-BASED FIREBASE SIGN-IN MODAL -->
+  <div class="modal" id="loginModal">
+    <div class="modal-box">
+      <h3 style="color:var(--green-dark); margin-bottom:8px;">Alinda Preparatory Portal Login</h3>
+      <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:12px;">Sign in with your school email and password. Passwords are securely encrypted by Firebase Auth.</p>
+      <form id="firebaseLoginForm">
+        <label>School Email</label>
+        <input type="email" id="loginEmail" required placeholder="user@alindaprep.ac.ug" />
+        <label>Password</label>
+        <input type="password" id="loginPassword" required placeholder="••••••••" />
+        <div style="display:flex; gap:10px; justify-content:flex-end;">
+          <button type="button" class="btn" id="closeLoginModal">Cancel</button>
+          <button type="submit" class="btn btn-yellow">Sign In</button>
+        </div>
+      </form>
+      <p id="loginMsg" style="margin-top:10px; color:#b91c1c; font-weight:600;"></p>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Alinda Preparatory School - Kanara. <strong>"Education for a Bright Future"</strong></p>
+  </footer>
+
+  <script type="module">
+    import { auth, db } from "./firebase-config.js";
+    import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
+    import {
+      collection, getDocs, doc, getDoc, addDoc, serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
+
+    const byId = (id) => document.getElementById(id);
+    const showModal = (id) => byId(id)?.classList.add("open");
+    const hideModal = (id) => byId(id)?.classList.remove("open");
+    const money = (value) => `UGX ${Number(value || 0).toLocaleString("en-UG")}`;
+
+    function addCell(row, value, strong = false) {
+      const cell = document.createElement("td");
+      if (strong) {
+        const b = document.createElement("strong");
+        b.textContent = value ?? "—";
+        cell.appendChild(b);
+      } else {
+        cell.textContent = value ?? "—";
+      }
+      row.appendChild(cell);
+    }
+
+    async function loadPublicSchoolData() {
+      const noticesContainer = byId("liveSchoolNotices");
+      const unebBody = byId("unebTableBody");
+      const feesBody = byId("feesTableBody");
+
+      try {
+        const [noticesSnap, unebSnap, feesSnap] = await Promise.all([
+          getDocs(collection(db, "school_notices")),
+          getDocs(collection(db, "uneb_results")),
+          getDocs(collection(db, "fees_structure"))
+        ]);
+
+        noticesContainer.replaceChildren();
+        if (noticesSnap.empty) {
+          const card = document.createElement("div");
+          card.className = "card";
+          const title = document.createElement("h4");
+          title.textContent = "School updates";
+          const message = document.createElement("p");
+          message.textContent = "New notices from the school administration will appear here.";
+          card.append(title, message);
+          noticesContainer.appendChild(card);
+        } else {
+          noticesSnap.forEach((itemDoc) => {
+            const item = itemDoc.data();
+            const card = document.createElement("article");
+            card.className = "card gold-top";
+            const author = document.createElement("small");
+            author.className = "eyebrow";
+            author.textContent = item.postedBy || "Administration";
+            const title = document.createElement("h4");
+            title.textContent = item.title || "School notice";
+            const body = document.createElement("p");
+            body.textContent = item.body || "";
+            card.append(author, title, body);
+            noticesContainer.appendChild(card);
+          });
+        }
+
+        unebBody.replaceChildren();
+        if (unebSnap.empty) {
+          unebBody.innerHTML = '<tr><td colspan="6">PLE results will appear here when officially published by the school.</td></tr>';
+        } else {
+          unebSnap.forEach((itemDoc) => {
+            const r = itemDoc.data();
+            const row = document.createElement("tr");
+            addCell(row, r.year, true);
+            addCell(row, r.candidates);
+            addCell(row, r.div1);
+            addCell(row, r.div2);
+            addCell(row, r.passRate == null ? "—" : `${r.passRate}%`, true);
+            addCell(row, r.bestAgg);
+            unebBody.appendChild(row);
+          });
+        }
+
+        feesBody.replaceChildren();
+        if (feesSnap.empty) {
+          feesBody.innerHTML = '<tr><td colspan="5">The school office will publish the current termly fees structure here.</td></tr>';
+        } else {
+          feesSnap.forEach((itemDoc) => {
+            const f = itemDoc.data();
+            const row = document.createElement("tr");
+            addCell(row, f.section, true);
+            addCell(row, money(f.dayFee));
+            addCell(row, money(f.boardingFee));
+            addCell(row, money(f.foodFee));
+            addCell(row, money(f.uniformFee));
+            feesBody.appendChild(row);
+          });
+        }
+      } catch (error) {
+        console.error("Unable to load public school information:", error);
+        noticesContainer.textContent = "School updates are temporarily unavailable. Please try again later.";
+        unebBody.innerHTML = '<tr><td colspan="6">Results are temporarily unavailable.</td></tr>';
+        feesBody.innerHTML = '<tr><td colspan="5">Fees information is temporarily unavailable.</td></tr>';
+      }
+    }
+
+    loadPublicSchoolData();
+
+    byId("openVerifyBtn")?.addEventListener("click", () => showModal("verifyModal"));
+    byId("unlockExtraBtn")?.addEventListener("click", () => showModal("verifyModal"));
+    byId("closeVerifyModal")?.addEventListener("click", () => hideModal("verifyModal"));
+    byId("openAdmissionModalBtn")?.addEventListener("click", () => showModal("admissionModal"));
+    byId("closeAdmissionModal")?.addEventListener("click", () => hideModal("admissionModal"));
+    byId("openPortalLoginBtn")?.addEventListener("click", () => showModal("loginModal"));
+    byId("closeLoginModal")?.addEventListener("click", () => hideModal("loginModal"));
+
+    ["verifyModal", "admissionModal", "loginModal"].forEach((id) => {
+      byId(id)?.addEventListener("click", (event) => {
+        if (event.target.id === id) hideModal(id);
+      });
+    });
+
+    if (sessionStorage.getItem("alinda_verified") === "true") {
+      byId("unlockedContent").style.display = "block";
+      byId("verifyStatusText").textContent = "Verified visitor session active.";
+    }
+
+    byId("visitorVerifyForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const message = byId("verifyMsg");
+      message.textContent = "Checking your access code…";
+      try {
+        // A passcode must be configured in Firestore settings/publicAccess.
+        // No hard-coded fallback code is used.
+        const configDoc = await getDoc(doc(db, "settings", "publicAccess"));
+        const validCode = configDoc.exists() ? configDoc.data().visitorPasscode : null;
+        const enteredCode = byId("visitorCode").value.trim();
+
+        if (!validCode || enteredCode !== validCode) {
+          message.textContent = "The code could not be verified. Please contact the school office.";
+          return;
+        }
+
+        await addDoc(collection(db, "verified_visitors"), {
+          name: byId("visitorName").value.trim(),
+          contact: byId("visitorContact").value.trim(),
+          verifiedAt: serverTimestamp()
+        });
+        sessionStorage.setItem("alinda_verified", "true");
+        byId("unlockedContent").style.display = "block";
+        byId("verifyStatusText").textContent = "Visitor access verified for this browser session.";
+        byId("visitorVerifyForm").reset();
+        message.textContent = "";
+        hideModal("verifyModal");
+      } catch (error) {
+        console.error("Visitor verification failed:", error);
+        message.textContent = "Verification is temporarily unavailable. Please contact the school office.";
+      }
+    });
+
+    byId("publicAdmissionForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const message = byId("admMsg");
+      message.textContent = "Submitting application…";
+      try {
+        await addDoc(collection(db, "admissions"), {
+          childName: byId("admChildName").value.trim(),
+          childClass: byId("admChildClass").value,
+          parentName: byId("admParentName").value.trim(),
+          parentPhone: byId("admParentPhone").value.trim(),
+          status: "Pending",
+          submittedAt: serverTimestamp()
+        });
+        message.textContent = "Application received. The school office will contact you.";
+        byId("publicAdmissionForm").reset();
+      } catch (error) {
+        console.error("Admission submission failed:", error);
+        message.textContent = "We could not submit the application. Please try again later.";
+      }
+    });
+
+    byId("firebaseLoginForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const message = byId("loginMsg");
+      message.textContent = "Signing in…";
+      try {
+        const credential = await signInWithEmailAndPassword(
+          auth, byId("loginEmail").value.trim(), byId("loginPassword").value
+        );
+        const userDoc = await getDoc(doc(db, "users", credential.user.uid));
+        if (!userDoc.exists()) {
+          message.textContent = "This account has no school role. Please contact the administrator.";
+          return;
+        }
+        const routes = {
+          pupil: "pupil.html",
+          staff: "staff.html",
+          dos: "dos.html",
+          bursar: "bursar.html",
+          headteacher: "headteacher.html",
+          director: "directors.html"
+        };
+        const destination = routes[userDoc.data().role];
+        if (!destination) {
+          message.textContent = "This account has an unrecognized role. Please contact the administrator.";
+          return;
+        }
+        window.location.assign(destination);
+      } catch (error) {
+        console.error("Portal sign-in failed:", error);
+        message.textContent = "Sign-in failed. Check your details or contact the school administrator.";
+      }
+    });
+  </script>
 </body>
 </html>
